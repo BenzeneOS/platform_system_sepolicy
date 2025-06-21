@@ -6,6 +6,7 @@
 (typeattributeset new_objects
   ( new_objects
     erase_secure_element_prop
+    port_security_mode_prop
     aisealhostservice
     aiseal_data_file
     binderfs_logs_state_hashed
