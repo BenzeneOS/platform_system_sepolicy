@@ -550,6 +550,7 @@ var (
 		"vcn_management":                         EXCEPTION_NO_FUZZER,
 		"vibrator":                               EXCEPTION_NO_FUZZER,
 		"vibrator_manager":                       EXCEPTION_NO_FUZZER,
+		"multisensory_manager":                   EXCEPTION_NO_FUZZER,
 		"virtualdevice":                          EXCEPTION_NO_FUZZER,
 		"virtualdevice_native":                   EXCEPTION_NO_FUZZER,
 		"virtual_camera":                         []string{"virtual_camera_fuzzer"},
