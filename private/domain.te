@@ -350,6 +350,26 @@ allow { domain -domain } hwservice_manager_type:hwservice_manager { add find };
 # when it's not explicitly used in allow rules
 allow { domain -domain } vndservice_manager_type:service_manager { add find };
 
+# Allow processes to find binder_stats_consumer service via service_manager
+allow {
+  domain
+  -init
+  -webview_zygote
+  -vendor_init
+  -app_zygote
+  -isolated_app_all
+  -hal_configstore_server
+} binder_stats_consumer_service:service_manager find;
+allow {
+  domain
+  -init
+  -webview_zygote
+  -vendor_init
+  -app_zygote
+  -isolated_app_all
+  -hal_configstore_server
+} system_server:binder call;
+
 # Under ASAN, processes will try to read /data, as the sanitized libraries are there.
 with_asan(`allow domain system_data_file:dir getattr;')
 # Under ASAN, /system/asan.options needs to be globally accessible.
@@ -922,6 +942,7 @@ full_treble_only(`
 
     -apc_service
     -audioserver_service # TODO(b/36783122) remove exemptions below once app_api_service is fixed
+    -binder_stats_consumer_service
     -cameraserver_service
     -drmserver_service
     -credstore_service
