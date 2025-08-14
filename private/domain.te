@@ -2005,6 +2005,7 @@ neverallow {
 define(`dac_override_allowed', `{
   apexd
   artd
+  casefolding_remover
   dnsmasq
   dumpstate
   init
