@@ -90,8 +90,7 @@ allow domain ashmem_libcutils_device:chr_file rw_file_perms;
 # which will have similar access control as ashmem. The files are relabeled
 # when allocated by libcutils.
 allow domain tmpfs:file { getattr relabelfrom };
-allow domain ashmem_compat_memfd:file { read write getattr ioctl map relabelto };
-allowxperm domain ashmem_compat_memfd:file ioctl ashmem_ioctls;
+allow domain ashmem_compat_memfd:file { read write getattr map relabelto };
 
 # Everyone can allocate memory via libcutils, and therefore will all need
 # access to the file containing the type that libcutils must use for
@@ -1647,6 +1646,17 @@ neverallow {
   -untrusted_app_25
   -untrusted_app_27
 } ashmem_device:chr_file open;
+
+neverallow {
+  domain
+  -untrusted_app_25
+  -untrusted_app_27
+  -untrusted_app_29
+  -untrusted_app_30
+  -untrusted_app_32
+  -untrusted_app_36
+  -priv_app_36
+} ashmem_compat_memfd:file ioctl;
 
 neverallow { domain -traced_probes -init -vendor_init } debugfs_tracing_printk_formats:file *;
 
