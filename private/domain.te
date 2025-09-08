@@ -953,6 +953,7 @@ full_treble_only(`
     -mediametrics_service
     -mediaserver_service
     -nfc_service
+    -omapi_service
     -radio_service
     -statsbootstrap_service
     -virtual_touchpad_service
