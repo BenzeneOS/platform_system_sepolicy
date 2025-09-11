@@ -261,6 +261,7 @@ var (
 		"content":                                                             EXCEPTION_NO_FUZZER,
 		"content_capture":                                                     EXCEPTION_NO_FUZZER,
 		"content_suggestions":                                                 EXCEPTION_NO_FUZZER,
+		"content_restriction":                                                 EXCEPTION_NO_FUZZER,
 		"contexthub":                                                          EXCEPTION_NO_FUZZER,
 		"contextual_search":                                                   EXCEPTION_NO_FUZZER,
 		"country_detector":                                                    EXCEPTION_NO_FUZZER,
