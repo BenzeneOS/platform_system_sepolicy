@@ -1824,3 +1824,6 @@ neverallow system_server *:process ptrace;
 
 # Allow system_server to read the userspace AOA enabled property.
 get_prop(system_server, usb_userspace_aoa_enabled_prop)
+
+# Allow system_server to read the remote_provisioning.*.rkp_only property;
+get_prop(system_server,remote_prov_prop)
