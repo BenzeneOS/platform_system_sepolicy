@@ -10,7 +10,6 @@
     hal_frp_service
     init_dev_config
     init_dev_config_exec
-    native_binder_stats_prop
     native_serial_service
     pbtombstone_exec
     prefetch
