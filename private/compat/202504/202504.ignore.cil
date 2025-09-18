@@ -31,4 +31,5 @@
     wallet_prop
     anomaly_detector_service
     uprobestats_service
+    remote_prov_prop
   ))
