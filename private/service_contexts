@@ -370,9 +370,7 @@ midi                                      u:object_r:midi_service:s0
 mmd                                       u:object_r:mmd_service:s0
 mount                                     u:object_r:mount_service:s0
 music_recognition                         u:object_r:music_recognition_service:s0
-starting_at_board_api(202602, `
-    native_serial                         u:object_r:native_serial_service:s0
-')
+native_serial                             u:object_r:native_serial_service:s0
 nearby                                    u:object_r:nearby_service:s0
 netd                                      u:object_r:netd_service:s0
 netpolicy                                 u:object_r:netpolicy_service:s0
