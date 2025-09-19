@@ -1661,6 +1661,7 @@ neverallow {
   domain
   userdebug_or_eng(`-domain') # exclude debuggable builds
   -fastbootd
+  -hal_fastboot_server
   -hal_bootctl_server
   -init
   -uncrypt
