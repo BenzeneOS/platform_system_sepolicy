@@ -2,6 +2,12 @@ divert(-1)
 
 define(`fatal_error', `errprint(`m4: '__file__: __line__`: fatal error: $*')m4exit(1)')
 define(`assert_define_visible', `ifelse($1()$1, `$1()$1', `fatal_error(`definition $1 is not visible in policy')', ``'')')
+define(`assert_api_level_format', `
+  ifelse(regexp(`$1', `^[0-9][0-9][0-9][0-9]04$'), 0, , `
+    fatal_error(`Invalid API level format: $1. Expected YYYY04, e.g., 202604.')
+  ')
+')
+
 
 ####################################
 # is_flag_enabled(flag, rules)
@@ -26,6 +32,7 @@ define(`is_flag_disabled', `
 # only when the board API level is at or above the specified 'api_level'.
 define(`starting_at_board_api', `
   assert_define_visible(`target_board_api_level')
+  assert_api_level_format(`$1')
   ifelse(eval(target_board_api_level >= $1), 1, `$2')
 ')
 
@@ -36,6 +43,7 @@ define(`starting_at_board_api', `
 # only when the board API level is below the specified 'api_level'.
 define(`until_board_api', `
   assert_define_visible(`target_board_api_level')
+  assert_api_level_format(`$1')
   ifelse(eval(target_board_api_level < $1), 1, `$2')
 ')
 
