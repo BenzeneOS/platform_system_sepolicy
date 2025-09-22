@@ -43,6 +43,7 @@ type transparency_service,          system_server_service, service_manager_type;
 type accessor_trusty_keymint_comm_service, service_manager_type;
 type trusty_keymint_comm_service, service_manager_type;
 type accessor_trusty_gatekeeper_service, service_manager_type;
+type accessor_trusty_hwcrypto_sharedsecret_service, service_manager_type;
 type accessor_trusty_widevine_comm_service, service_manager_type;
 type trusty_widevine_comm_service, service_manager_type;
 type accessor_trusty_keymint_provisioning_service, service_manager_type;
