@@ -137,6 +137,7 @@ var (
 		"android.hardware.security.secureclock.ISecureClock/default":                         EXCEPTION_NO_FUZZER,
 		"android.hardware.security.see.hwcrypto.IHwCryptoKey/default":                        []string{"android.hardware.trusty.hwcryptohal-service_fuzzer"},
 		"android.hardware.security.sharedsecret.ISharedSecret/default":                       EXCEPTION_NO_FUZZER,
+		"android.hardware.security.sharedsecret.ISharedSecret/hwcrypto":                      EXCEPTION_NO_FUZZER,
 		"android.hardware.sensors.ISensors/default":                                          EXCEPTION_NO_FUZZER,
 		"android.hardware.soundtrigger3.ISoundTriggerHw/default":                             EXCEPTION_NO_FUZZER,
 		"android.hardware.tetheroffload.IOffload/default":                                    EXCEPTION_NO_FUZZER,
