@@ -2,6 +2,7 @@
 neverallow {
   bpfdomain
   -bpfloader
+  -dumpstate
   -netd
   -netutils_wrapper
   -network_stack
