@@ -41,3 +41,6 @@ r_dir_file(uprobestats, { domain -appdomain })
 # Allow uprobestats to manage its own config files.
 allow uprobestats uprobestats_configs_data_file:dir rw_dir_perms;
 allow uprobestats uprobestats_configs_data_file:file { r_file_perms unlink };
+
+# Allow uprobestats to start its own service
+add_service(uprobestats, uprobestats_service);
