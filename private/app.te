@@ -5,6 +5,7 @@
 r_dir_file({
   appdomain
   -ephemeral_app
+  -pcc_component
   -isolated_app_all
   -network_stack
   -platform_app
@@ -19,6 +20,7 @@ userdebug_or_eng(`
   auditallow {
     appdomain
     -ephemeral_app
+    -pcc_component
     -isolated_app_all
     -network_stack
     -platform_app
@@ -116,17 +118,17 @@ allow appdomain apex_art_data_file:file rx_file_perms;
 allow appdomain tombstone_data_file:file { getattr read };
 
 # Execute the shell or other system executables.
-allow { appdomain -ephemeral_app -sdk_sandbox_all } shell_exec:file rx_file_perms;
-allow { appdomain -ephemeral_app -sdk_sandbox_all } toolbox_exec:file rx_file_perms;
-not_full_treble(`allow { appdomain -ephemeral_app -sdk_sandbox_all } vendor_file:file x_file_perms;')
+allow { appdomain -ephemeral_app -pcc_component -sdk_sandbox_all } shell_exec:file rx_file_perms;
+allow { appdomain -ephemeral_app -pcc_component -sdk_sandbox_all } toolbox_exec:file rx_file_perms;
+not_full_treble(`allow { appdomain -ephemeral_app -pcc_component -sdk_sandbox_all } vendor_file:file x_file_perms;')
 
 # Allow apps access to /vendor/app except for privileged
 # apps which cannot be in /vendor.
-r_dir_file({ appdomain -ephemeral_app -sdk_sandbox_all }, vendor_app_file)
-allow { appdomain -ephemeral_app -sdk_sandbox_all } vendor_app_file:file execute;
+r_dir_file({ appdomain -ephemeral_app -pcc_component -sdk_sandbox_all }, vendor_app_file)
+allow { appdomain -ephemeral_app -pcc_component -sdk_sandbox_all } vendor_app_file:file execute;
 
 # Allow apps to read microdroid related files in vendor partition for CTS purpose.
-r_dir_file({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, vendor_microdroid_file)
+r_dir_file({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, vendor_microdroid_file)
 
 # Perform binder IPC to sdk sandbox.
 binder_call(appdomain, sdk_sandbox_all)
@@ -142,60 +144,60 @@ allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } mnt_user_f
 allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } mnt_user_file:lnk_file r_file_perms;
 
 # Read/write visible storage
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } { sdcard_type fuse }:dir create_dir_perms;
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } { sdcard_type fuse }:file create_file_perms;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } { sdcard_type fuse }:dir create_dir_perms;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } { sdcard_type fuse }:file create_file_perms;
 # This should be removed if sdcardfs is modified to alter the secontext for its
 # accesses to the underlying FS.
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } media_rw_data_file:dir create_dir_perms;
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } media_rw_data_file:file create_file_perms;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } media_rw_data_file:dir create_dir_perms;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } media_rw_data_file:file create_file_perms;
 
 # Allow apps to use the USB Accessory interface.
 # http://developer.android.com/guide/topics/connectivity/usb/accessory.html
 #
 # USB devices are first opened by the system server (USBDeviceManagerService)
 # and the file descriptor is passed to the right Activity via binder.
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } usb_device:chr_file { read write getattr ioctl };
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } usbaccessory_device:chr_file { read write getattr };
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } usb_device:chr_file { read write getattr ioctl };
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } usbaccessory_device:chr_file { read write getattr };
 
 # Allow apps to use serial ports. The serial ports are opened by the native serial service and passed through system_server to apps.
 # Only allow IOCTL operations in ioctl_tty(2). Also exclude those that require CAP_SYS_ADMIN and those in "Controlling terminal",
 # "Process group and session ID" and "Pseudoterminal ioctls" sections.
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } serialservice:fd use;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } serialservice:fd use;
 allow {
-    appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
+    appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all
 } { serial_device usb_serial_device }:chr_file { read write getattr ioctl };
 allowxperm {
-    appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
+    appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all
 } { serial_device usb_serial_device }:chr_file ioctl unpriv_serial_ioctls;
 
 #logd access
-control_logd({ appdomain -ephemeral_app -sdk_sandbox_all })
+control_logd({ appdomain -ephemeral_app -pcc_component -sdk_sandbox_all })
 
 # application inherit logd write socket (urge is to deprecate this long term)
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } keystore:keystore2_key { delete use get_info grant rebind update };
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } keystore:keystore2_key { delete use get_info grant rebind update };
 
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } keystore_maintenance_service:service_manager find;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } keystore_maintenance_service:service_manager find;
 
 use_keystore({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
 
-use_credstore({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
+use_credstore({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all })
 
 use_omapi({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
 
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } persistent_data_block_service:service_manager find;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } persistent_data_block_service:service_manager find;
 
 # For app fuse.
-pdx_client({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, display_client)
-pdx_client({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, display_manager)
-pdx_client({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, display_vsync)
-pdx_client({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, performance_client)
+pdx_client({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, display_client)
+pdx_client({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, display_manager)
+pdx_client({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, display_vsync)
+pdx_client({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, performance_client)
 # Apps do not directly open the IPC socket for bufferhubd.
-pdx_use({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all }, bufferhub_client)
+pdx_use({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, bufferhub_client)
 
 # Apps receive an open tun fd from the framework for
 # device traffic. Do not allow untrusted app to directly open tun_device
-allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } tun_device:chr_file { read write getattr append ioctl };
-allowxperm { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } tun_device:chr_file ioctl TUNGETIFF;
+allow { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } tun_device:chr_file { read write getattr append ioctl };
+allowxperm { appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all } tun_device:chr_file ioctl TUNGETIFF;
 
 
 # WebView and other application-specific JIT compilers
@@ -829,6 +831,7 @@ is_flag_enabled(RELEASE_UNLOCKED_STORAGE_API, `
     appdomain
     -isolated_app_all
     -ephemeral_app
+    -pcc_component
     -sdk_sandbox_all
   } storage_area_dir:{ notdevfile_class_set dir } storage_area_content_file;
 ')
