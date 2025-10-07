@@ -27,3 +27,7 @@ allow zygote_next self:process setcurrent;
 allow zygote_next isolated_app:process dyntransition;
 
 set_prop(zygote_next, zygote_zygote_next_server_status_prop)
+allow zygote_next native_app_zygote:process dyntransition;
+# The only way to enter native_app_zygote is for the zygote_next to fork a new
+# native_app_zygote child.
+neverallow { domain -zygote_next } native_app_zygote:process { dyntransition transition };
