@@ -204,6 +204,7 @@ var (
 		"android.system.virtualizationservice":                                []string{"virtualizationmanager_fuzzer"},
 		"android.os.IAccessor/ICommService/security_vm_keymint":               EXCEPTION_NO_FUZZER,
 		"android.trusty.commservice.ICommService/security_vm_keymint":         EXCEPTION_NO_FUZZER,
+		"android.os.IAccessor/IGatekeeper/security_vm_gatekeeper":             EXCEPTION_NO_FUZZER,
 		"android.os.IAccessor/ICommService/widevine_vm_widevine":              EXCEPTION_NO_FUZZER,
 		"android.widevine.trusty.commservice.ICommService/widevine_vm":        EXCEPTION_NO_FUZZER,
 		"android.system.virtualizationservice_internal.IVfioHandler":          EXCEPTION_NO_FUZZER,
