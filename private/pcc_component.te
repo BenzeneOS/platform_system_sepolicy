@@ -6,13 +6,14 @@
 type pcc_component, domain;
 
 typeattribute pcc_component coredomain;
-# TODO: b/443073555 - Audit each access granted via appdomain to pcc_component.
 
 net_domain(pcc_component)
 app_domain(pcc_component)
 
-# Allow pcc components to read files in visible storage
-allow pcc_component { sdcard_type fuse media_rw_data_file }:file {read write getattr ioctl lock append open};
+# TODO: b/454229657 - Remove write access to external storage once debug mode stops relying on it
+# Allow pcc components to read files in visible storage. The write access to sdcard_type, fuse is temporary for debug mode functionality in AiAi.
+allow pcc_component { sdcard_type fuse }:file { read getattr write append ioctl lock };
+allow pcc_component media_rw_data_file:file { read getattr };
 allow pcc_component { sdcard_type fuse media_rw_data_file }:dir { open search read };
 
 # Some apps ship with shared libraries and binaries that they write out
@@ -161,10 +162,22 @@ allow pcc_component system_server:udp_socket {
 
 allow pcc_component ashmem_device:chr_file { getattr read ioctl watch watch_reads append write lock map };
 
+# Reads from other apps fifos
+allow pcc_component appdomain:fifo_file { getattr open read map watch };
+
+# Communication with pcc_component via fifos
+allow pcc_component pcc_component:fifo_file rw_file_perms;
+
+# Read wallpaper file (opened by system).
+allow { appdomain -pcc_component } wallpaper_file:file { getattr read map };
+
+# Read cached ringtones (opened by system).
+allow pcc_component ringtone_file:file { getattr read map };
+
 ###
 ### neverallow rules
 ###
-#
+
 # TODO: b/442762197 - Add a neverallow rule for servicemanager services
 
 neverallow pcc_component app_data_file_type:file execute_no_trans;
@@ -196,4 +209,43 @@ neverallow pcc_component { sdcard_type fuse media_rw_data_file }:dir {write add_
 # Avoid reads to proc_net, it contains too much device wide information about
 # ongoing connections.
 neverallow pcc_component proc_net:file no_rw_file_perms;
+
+# Never allow pcc components to write to app sandbox directory
+neverallow pcc_component {
+  app_data_file
+  privapp_data_file
+  is_flag_enabled(RELEASE_UNLOCKED_STORAGE_API, `storage_area_content_file')
+}:dir create_dir_perms;
+neverallow pcc_component {
+  app_data_file
+  privapp_data_file
+  is_flag_enabled(RELEASE_UNLOCKED_STORAGE_API, `storage_area_content_file')
+}:file { create rename setattr unlink append write };
+neverallow pcc_component {
+  system_app_data_file
+}:file { getattr map read write };
+
+# Never allow pcc component to write files in visible storage
+neverallow pcc_component media_rw_data_file:file { write append ioctl lock };
+
+# Never allow pcc component to write to other app fifo_files
+# su is allowed because of rule `allow domain su (fifo_file (write getattr))` in domain.te
+neverallow pcc_component { appdomain -pcc_component -su }:fifo_file { write append ioctl lock watch_reads };
+
+# Never allow pcc component to use unix_dgram_socket
+neverallow pcc_component pcc_component:unix_dgram_socket { create_socket_perms sendto };
+
+# Never allow pcc component to create tcp stream sockets
+neverallow pcc_component pcc_component:tcp_socket create_stream_socket_perms;
+neverallow pcc_component port_type:tcp_socket name_connect;
+
+# Never allow pcc component to create udp, icmp, rawip sockets
+neverallow pcc_component pcc_component:{ icmp_socket udp_socket rawip_socket } create_socket_perms;
+
+# Only allow stream socket comms between pcc components
+neverallow pcc_component { appdomain -pcc_component -su }:unix_stream_socket { getopt getattr read write shutdown };
+
+neverallow pcc_component wallpaper_file:file write;
+
+neverallow pcc_component ringtone_file:file write;
 
