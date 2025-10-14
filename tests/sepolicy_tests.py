@@ -244,7 +244,7 @@ def TestIsolatedAttributeConsistency(test_policy):
         "media_variant_prop": ["file"],
         "nnapi_ext_deny_product_prop": ["file"],
         "servicemanager": ["fd"],
-        "sysfs_gpu": ["file"],
+        "sysfs_gpu": ["dir", "file", "lnk_file"],
         "toolbox_exec": ["file"],
         # extra types being granted to isolated_compute_app
         "isolated_compute_allowed": ["service_manager", "chr_file"],
