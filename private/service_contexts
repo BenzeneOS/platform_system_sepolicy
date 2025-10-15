@@ -490,6 +490,7 @@ telephony_ims                             u:object_r:radio_service:s0
 is_flag_enabled(RELEASE_TELEPHONY_MODULE, `
     telephony_phone_number                u:object_r:radio_service:s0
 ')
+talisman                                  u:object_r:talisman_service:s0
 testharness                               u:object_r:testharness_service:s0
 tethering                                 u:object_r:tethering_service:s0
 textclassification                        u:object_r:textclassification_service:s0
