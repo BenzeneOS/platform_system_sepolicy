@@ -203,6 +203,7 @@ var (
 		"android.hardware.security.keymint.IRemotelyProvisionedComponent/avf": EXCEPTION_NO_FUZZER,
 		"android.system.virtualizationservice":                                []string{"virtualizationmanager_fuzzer"},
 		"android.os.IAccessor/ICommService/security_vm_keymint":               EXCEPTION_NO_FUZZER,
+		"android.os.IAccessor/sharedsecret/security_vm_shared_secret":         EXCEPTION_NO_FUZZER,
 		"android.trusty.commservice.ICommService/security_vm_keymint":         EXCEPTION_NO_FUZZER,
 		"android.os.IAccessor/IGatekeeper/security_vm_gatekeeper":             EXCEPTION_NO_FUZZER,
 		"android.os.IAccessor/ICommService/widevine_vm_widevine":              EXCEPTION_NO_FUZZER,
