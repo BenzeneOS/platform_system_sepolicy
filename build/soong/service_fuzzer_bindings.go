@@ -490,6 +490,7 @@ var (
 		"system_config":                          EXCEPTION_NO_FUZZER,
 		"system_server_dumper":                   EXCEPTION_NO_FUZZER,
 		"system_update":                          EXCEPTION_NO_FUZZER,
+		"talisman":                               EXCEPTION_NO_FUZZER, // TODO(b/418280383): add fuzzer
 		"tare":                                   EXCEPTION_NO_FUZZER,
 		"task":                                   EXCEPTION_NO_FUZZER,
 		"task_continuity":                        EXCEPTION_NO_FUZZER,
