@@ -10,6 +10,14 @@ allow bpfloader kmsg_device:chr_file w_file_perms;
 allow bpfloader sysfs_btf:dir search;
 allow bpfloader sysfs_btf:file { getattr read open };
 
+# allow bpfloader to access global symbols from kallsyms
+allow bpfloader proc_kallsyms:file r_file_perms;
+
+# Allow bpfloader to attach BPF programs to tracepoints. Deny read permission so that
+# bpfloader cannot use this access to read perf event data like process stacks.
+allow bpfloader self:perf_event { open write cpu kernel };
+neverallow bpfloader self:perf_event ~{ open write cpu kernel };
+
 # These permissions are required to pin ebpf maps & programs.
 allow bpfloader bpffs_type:dir { add_name create open read remove_name search setattr write };
 allow bpfloader bpffs_type:file { create getattr read rename setattr };
@@ -20,7 +28,7 @@ allow { bpffs_type -fs_bpf } fs_bpf:filesystem associate;
 allow bpfloader self:bpf { map_create map_read map_write prog_load prog_run };
 
 allow bpfloader self:capability { chown sys_admin net_admin };
-allow bpfloader self:global_capability2_class_set { bpf perfmon };
+allow bpfloader self:global_capability2_class_set { bpf perfmon syslog };
 
 allow bpfloader sysfs_fs_fuse_bpf:file r_file_perms;
 
@@ -40,9 +48,12 @@ neverallow { domain            } bpffs_type:dir ~{ add_name create getattr mount
 neverallow { domain -bpfloader } bpffs_type:dir { add_name create open read remove_name setattr write };
 
 neverallow { domain            } bpffs_type:file ~{ create getattr map open read rename setattr write };
-neverallow { domain -bpfloader } bpffs_type:file { create map open rename setattr };
+neverallow { domain -bpfloader } bpffs_type:file { create map rename setattr };
+neverallow { domain -bpfloader } { bpffs_type -fs_bpf_dmabuf }:file { open };
+neverallow { domain -bpfloader -dumpstate -system_server } bpffs_type:file { open };
 neverallow { domain -bpfloader -gpuservice -lmkd -mediaprovider_app -netd -netutils_wrapper                -system_server                             } fs_bpf:file                { getattr read };
 neverallow { domain -bpfloader                                                                             -system_server -traced_probes              } fs_bpf_cputimeinstate:file { getattr read write };
+neverallow { domain -bpfloader -system_suspend                                                                                                        } fs_bpf_kernelwakelockduration:file { getattr read write };
 neverallow { domain -bpfloader                                                                                                                        } fs_bpf_loader:file         { getattr read };
 neverallow { domain -bpfloader                                                              -network_stack                                            } fs_bpf_net_private:file    { getattr read };
 neverallow { domain -bpfloader                                                              -network_stack -system_server                             } fs_bpf_net_shared:file     { getattr read };

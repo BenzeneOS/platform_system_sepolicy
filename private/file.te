@@ -5,7 +5,7 @@ type proc_allocinfo, fs_type, proc_type;
 type config_gz, fs_type, proc_type;
 
 # /proc/sys/kernel/firmware_config/*
-type proc_firmware_config, fs_type, proc_type;
+until_board_api(202604, `type proc_firmware_config, fs_type, proc_type;')
 
 # /sys/fs/bpf/<dir> for mainline tethering use
 # TODO: move S+ fs_bpf_tethering here from public/file.te
@@ -17,6 +17,8 @@ type fs_bpf_loader, fs_type, bpffs_type;
 type fs_bpf_uprobestats, fs_type, bpffs_type;
 type fs_bpf_memevents, fs_type, bpffs_type;
 type fs_bpf_cputimeinstate, fs_type, bpffs_type;
+type fs_bpf_kernelwakelockduration, fs_type, bpffs_type;
+type fs_bpf_dmabuf, fs_type, bpffs_type;
 
 # /data/system/mediadrm
 type mediadrm_system_data_file, file_type, data_file_type, core_data_file_type;
@@ -276,3 +278,13 @@ type ashmem_compat_memfd_context_file, system_file_type, file_type;
 
 # /sys/device/virtual/misc/ublk-control/
 type sysfs_ublk, fs_type, sysfs_type;
+
+# /sys/bus/thunderbolt and /sys/class/typec
+until_board_api(202604, `type sysfs_thunderbolt, fs_type, sysfs_type;')
+until_board_api(202604, `type sysfs_typec, fs_type, sysfs_type;')
+until_board_api(202604, `type sysfs_usb_pd, fs_type, sysfs_type;')
+
+# Type for wifi template file
+type wifi_vendor_data_file, file_type, data_file_type;
+
+type zygote_next_socket, file_type, coredomain_socket;

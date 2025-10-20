@@ -235,6 +235,7 @@
 /dev/socket/wpa_wlan9                                             wpa_socket
 /dev/socket/zygote                                                zygote_socket
 /dev/socket/zygote_secondary                                      zygote_socket
+/dev/socket/zygote_next                                           zygote_next_socket
 /dev/socket/usap_pool_primary                                     zygote_socket
 /dev/socket/usap_pool_secondary                                   zygote_socket
 /dev/spdif_out                                                    audio_device
@@ -273,6 +274,8 @@
 /dev/uio9                                                         uio_device
 /dev/urandom                                                      random_device
 /dev/usb_accessory                                                usbaccessory_device
+/dev/usb-ffs/aoa/ep1                                              usbaccessory_device
+/dev/usb-ffs/aoa/ep2                                              usbaccessory_device
 /dev/v4l-touch                                                    input_device
 /dev/v4l-touch0                                                   input_device
 /dev/v4l-touch10                                                  input_device
@@ -341,6 +344,7 @@
 /system/bin/bootstat                                              bootstat_exec
 /system/bin/app_process32                                         zygote_exec
 /system/bin/app_process64                                         zygote_exec
+/system/bin/zygote_next                                           zygote_next_exec
 /system/bin/pbtombstone                                           pbtombstone_exec
 /system/bin/servicemanager                                        servicemanager_exec
 /system/bin/surfaceflinger                                        surfaceflinger_exec
@@ -400,6 +404,8 @@
 /system/bin/llkd                                                  llkd_exec
 /system/bin/lmkd                                                  lmkd_exec
 /system/bin/mmd                                                   mmd_exec
+/system/bin/mmd_setup                                             mmd_setup_exec
+/system/bin/pmgd                                                  pmgd_exec
 /system/bin/usbd                                                  usbd_exec
 /system/bin/inputflinger                                          inputflinger_exec
 /system/bin/logd                                                  logd_exec
@@ -493,6 +499,7 @@
 /system/bin/uprobestats                                           uprobestats_exec
 /system/bin/trace_redactor                                        trace_redactor_exec
 /system/bin/bert_collector                                        bert_collector_exec
+/system/bin/omapi                                                 omapi_exec
 
 /vendor                                                           vendor_file
 /vendor/does_not_exist                                            vendor_file
@@ -949,6 +956,7 @@
 /data/storage_area                                                system_userdir_file
 /data/misc_ce/0/storage_area_keys                                 storage_area_key_file
 /data/userdata_exp.test                                           exp_partition_data_file
+/data/per_boot/zram                                               zram_data_file
 
 /data/misc/adb                                                    adb_keys_file
 /data/misc/adb/test                                               adb_keys_file
@@ -1149,7 +1157,8 @@
 /data/vendor_ce/99/facedata/test                                  face_vendor_data_file
 /data/vendor_de/0/irisdata                                        iris_vendor_data_file
 /data/vendor_de/99/irisdata/test                                  iris_vendor_data_file
-
+/data/vendor_ce/0/wifi                                            wifi_vendor_data_file
+/data/vendor_ce/99/wifi/test                                      wifi_vendor_data_file
 /data/bootchart                                                   bootchart_data_file
 /data/bootchart/test                                              bootchart_data_file
 

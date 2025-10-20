@@ -24,6 +24,8 @@ import (
 	"github.com/google/blueprint/proptools"
 )
 
+//go:generate go run ../../../../build/blueprint/gobtools/codegen/gob_gen.go
+
 var (
 	combine_maps    = pctx.HostBinToolVariable("combine_maps", "combine_maps")
 	combineMapsCmd  = "${combine_maps} -t ${topHalf} -b ${bottomHalf} -o $out"
@@ -78,17 +80,21 @@ type cilCompatMap struct {
 	installPath   android.InstallPath
 }
 
-type CilCompatMapGenerator interface {
-	GeneratedMapFile() android.OptionalPath
+// @auto-generate: gob
+type CilCompatMapGeneratorInfo struct {
+	GeneratedMapFile android.OptionalPath
 }
+
+var CilCompatMapGeneratorInfoProvider = blueprint.NewProvider[CilCompatMapGeneratorInfo]()
 
 func expandTopHalf(ctx android.ModuleContext) android.OptionalPath {
 	var topHalf android.OptionalPath
-	ctx.VisitDirectDeps(func(dep android.Module) {
+	ctx.VisitDirectDepsProxy(func(dep android.ModuleProxy) {
 		depTag := ctx.OtherModuleDependencyTag(dep)
 		switch depTag {
 		case TopHalfDepTag:
-			topHalf = dep.(CilCompatMapGenerator).GeneratedMapFile()
+			info := android.OtherModuleProviderOrDefault(ctx, dep, CilCompatMapGeneratorInfoProvider)
+			topHalf = info.GeneratedMapFile
 		}
 	})
 	return topHalf
@@ -153,6 +159,10 @@ func (c *cilCompatMap) GenerateAndroidBuildActions(ctx android.ModuleContext) {
 		ctx.SetOutputFiles(android.Paths{c.installSource.Path()}, "")
 	}
 
+	android.SetProvider(ctx, CilCompatMapGeneratorInfoProvider, CilCompatMapGeneratorInfo{
+		GeneratedMapFile: c.installSource,
+	})
+
 	moduleInfoJSON := ctx.ModuleInfoJSON()
 	moduleInfoJSON.Class = []string{"ETC"}
 	moduleInfoJSON.SystemSharedLibs = []string{"none"}
@@ -180,10 +190,4 @@ func (c *cilCompatMap) AndroidMkEntries() []android.AndroidMkEntries {
 			},
 		},
 	}}
-}
-
-var _ CilCompatMapGenerator = (*cilCompatMap)(nil)
-
-func (c *cilCompatMap) GeneratedMapFile() android.OptionalPath {
-	return c.installSource
 }

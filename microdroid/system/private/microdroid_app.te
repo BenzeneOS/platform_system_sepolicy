@@ -22,3 +22,14 @@ allow microdroid_app apex_mnt_dir:dir r_dir_perms;
 set_prop(microdroid_app, microdroid_encrypted_store_setup_prop);
 # Allow payload to get the status of encrypted store.
 get_prop(microdroid_app, microdroid_encrypted_store_status_prop);
+
+# Microdroid launches the tenant executables
+allow microdroid_app tenant_apk_file:file x_file_perms;
+
+userdebug_or_eng(`
+    # Allow payload to read vd_device for benchmark purpose
+    # root is also required to read vd_device, so normal payloads still cannot read vd_device.
+    allow microdroid_app block_device:dir r_dir_perms;
+    allow microdroid_app vd_device:blk_file r_file_perms;
+    allowxperm microdroid_app vd_device:blk_file ioctl { BLKGETSIZE64 };
+')

@@ -160,15 +160,13 @@ allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } usbaccesso
 # Allow apps to use serial ports. The serial ports are opened by the native serial service and passed through system_server to apps.
 # Only allow IOCTL operations in ioctl_tty(2). Also exclude those that require CAP_SYS_ADMIN and those in "Controlling terminal",
 # "Process group and session ID" and "Pseudoterminal ioctls" sections.
-starting_at_board_api(202602, `
-    allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } serialservice:fd use;
-    allow {
-        appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
-    } { serial_device usb_serial_device }:chr_file { read write getattr ioctl };
-    allowxperm {
-        appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
-    } { serial_device usb_serial_device }:chr_file ioctl unpriv_serial_ioctls;
-')
+allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } serialservice:fd use;
+allow {
+    appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
+} { serial_device usb_serial_device }:chr_file { read write getattr ioctl };
+allowxperm {
+    appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all
+} { serial_device usb_serial_device }:chr_file ioctl unpriv_serial_ioctls;
 
 #logd access
 control_logd({ appdomain -ephemeral_app -sdk_sandbox_all })
@@ -181,6 +179,8 @@ allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } keystore_m
 use_keystore({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
 
 use_credstore({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
+
+use_omapi({ appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all })
 
 allow { appdomain -isolated_app_all -ephemeral_app -sdk_sandbox_all } persistent_data_block_service:service_manager find;
 
@@ -205,6 +205,7 @@ allow appdomain { ashmem_device ashmem_libcutils_device }:chr_file execute;
 
 # Receive and use open file descriptors inherited from zygote.
 allow appdomain zygote:fd use;
+allow appdomain zygote_next:fd use;
 
 # Receive and use open file descriptors inherited from app zygote.
 allow appdomain app_zygote:fd use;
@@ -404,12 +405,6 @@ userdebug_or_eng(`
   allow appdomain heapdump_data_file:file append;
 ')
 
-# Grant GPU access to all processes started by Zygote.
-# They need that to render the standard UI.
-allow { appdomain -isolated_app_all } gpu_device:chr_file rw_file_perms;
-allow { appdomain -isolated_app_all } gpu_device:dir r_dir_perms;
-allow { appdomain -isolated_app_all } sysfs_gpu:file r_file_perms;
-
 
 # Use the Binder.
 binder_use(appdomain)
@@ -466,6 +461,7 @@ allow appdomain resourcecache_data_file:dir r_dir_perms;
 read_logd(appdomain)
 
 allow appdomain zygote:unix_dgram_socket write;
+allow appdomain zygote_next:unix_dgram_socket write;
 
 allow appdomain console_device:chr_file { read write };
 

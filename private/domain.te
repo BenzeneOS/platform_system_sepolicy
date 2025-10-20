@@ -350,7 +350,7 @@ allow { domain -domain } hwservice_manager_type:hwservice_manager { add find };
 # when it's not explicitly used in allow rules
 allow { domain -domain } vndservice_manager_type:service_manager { add find };
 
-# Allow processes to find statsbootstrap service via service_manager
+# Allow processes to find binder_stats_consumer service via service_manager
 allow {
   domain
   -init
@@ -359,7 +359,7 @@ allow {
   -app_zygote
   -isolated_app_all
   -hal_configstore_server
-} statsbootstrap_service:service_manager find;
+} binder_stats_consumer_service:service_manager find;
 allow {
   domain
   -init
@@ -453,11 +453,9 @@ r_dir_file(domain, sysfs_fs_incfs_features);
 r_dir_file(domain, sysfs_fs_fuse_features);
 
 # Path resolution access in cgroups.
-allow domain cgroup:dir search;
 allow { domain -appdomain -rs } cgroup:dir w_dir_perms;
 allow { domain -appdomain -rs } cgroup:file w_file_perms;
 
-allow domain cgroup_v2:dir search;
 allow { domain -appdomain -rs } cgroup_v2:dir w_dir_perms;
 allow { domain -appdomain -rs } cgroup_v2:file w_file_perms;
 
@@ -547,9 +545,6 @@ get_prop(domain, vendor_socket_hook_prop)
 get_prop(domain, vndk_prop)
 get_prop(domain, vold_status_prop)
 get_prop(domain, vts_config_prop)
-# Allow all processes to read the information for native binder stats
-# configuration.
-get_prop(domain, native_binder_stats_prop)
 
 # Binder cache properties are world-readable
 get_prop(domain, binder_cache_bluetooth_server_prop)
@@ -944,6 +939,7 @@ full_treble_only(`
 
     -apc_service
     -audioserver_service # TODO(b/36783122) remove exemptions below once app_api_service is fixed
+    -binder_stats_consumer_service
     -cameraserver_service
     -drmserver_service
     -credstore_service
@@ -955,8 +951,8 @@ full_treble_only(`
     -mediametrics_service
     -mediaserver_service
     -nfc_service
+    -omapi_service
     -radio_service
-    -statsbootstrap_service
     -virtual_touchpad_service
     -vr_manager_service
     userdebug_or_eng(`-hal_face_service')
@@ -1453,8 +1449,31 @@ neverallow {
 # transitioned from the limited adbd_tradeinmode context. It is a wrapper
 # around "am" to avoid exposing the shell context when adbd is in trade-in
 # mode.
-neverallow { domain -simpleperf_app_runner -runas -app_zygote -webview_zygote -zygote } {
-  appdomain -shell -simpleperf userdebug_or_eng(`-su') -tradeinmode
+#
+# isolatd_app is excluded as its rule the defined below to allow zygote_next to transition to it.
+neverallow {
+  domain
+  -simpleperf_app_runner
+  -runas
+  -app_zygote
+  -webview_zygote
+  -zygote
+} {
+  appdomain -shell -simpleperf userdebug_or_eng(`-su') -tradeinmode -isolated_app
+}:process { transition dyntransition };
+
+# Only domains spawned from zygote, runas, simpleperf_app_runner, and zygote_next may have
+# the isolated_app attribute.
+neverallow {
+  domain
+  -simpleperf_app_runner
+  -runas
+  -app_zygote
+  -webview_zygote
+  -zygote
+  -zygote_next
+} {
+  isolated_app
 }:process { transition dyntransition };
 
 # Minimize read access to shell- or app-writable symlinks.
@@ -1639,6 +1658,7 @@ neverallow {
   domain
   userdebug_or_eng(`-domain') # exclude debuggable builds
   -fastbootd
+  -hal_fastboot_server
   -hal_bootctl_server
   -init
   -uncrypt
@@ -2004,6 +2024,7 @@ define(`dac_override_allowed', `{
   vold
   vold_prepare_subdirs
   zygote
+  zygote_next
   userdebug_or_eng(`overlay_remounter')
 }')
 neverallow ~dac_override_allowed self:global_capability_class_set dac_override;
@@ -2233,6 +2254,7 @@ neverallow {
 neverallow {
   domain
   -init
+  -bpfloader
   -traced_probes
   -traced_perf
   userdebug_or_eng(`-profcollectd')
@@ -2315,6 +2337,7 @@ neverallow {
     -virtualizationmanager
     -virtualizationservice
     -adbd_common # maybe should move to emulator/virtual device specific policy
+    -traced # traced listens to connections from guest VMs
 
     # not expected, and defined outside of system/sepolicy.
     # Note: this attribute is strongly recommended to be empty if not required.
@@ -2322,7 +2345,6 @@ neverallow {
 
     # these are permissions that should be removed, and they are here for visibility.
     -compos_fd_server   # TODO: get connections from virtmanager
-    -hal_widevine_system # TODO: get connections from virtmanager
     -vmlauncher_app     # TODO: get connections from virtmanager
 } *:vsock_socket { connect create accept bind };
 
@@ -2338,4 +2360,3 @@ neverallow domain *:system x509_certificate_load;
 neverallow domain proc:filesystem associate;
 neverallow domain domain:dir { write add_name remove_name };
 neverallow domain domain:file create;
-

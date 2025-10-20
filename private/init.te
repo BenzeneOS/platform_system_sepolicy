@@ -605,6 +605,7 @@ allow init {
   sysfs_dm
   sysfs_lru_gen_enabled
   sysfs_pgsize_migration
+  starting_at_board_api(202604, `sysfs_suspend_params')
 }:file w_file_perms;
 
 allow init {
@@ -722,7 +723,14 @@ allow init property_type:property_service set;
 # Send an SELinux userspace denial to the kernel audit subsystem,
 # so it can be picked up and processed by logd. These denials are
 # generated when an attempt to set a property is denied by policy.
-allow init self:netlink_audit_socket { create_socket_perms_no_ioctl nlmsg_relay };
+allow init self:netlink_audit_socket create_socket_perms_no_ioctl;
+
+# For kernel < 6.13
+allow init self:netlink_audit_socket nlmsg_relay;
+# For kernel >= 6.13
+allow init self:netlink_audit_socket nlmsg;
+allowxperm init self:netlink_audit_socket nlmsg AUDIT_USER_AVC;
+
 allow init self:global_capability_class_set audit_write;
 
 # Run "ifup lo" to bring up the localhost interface
@@ -738,8 +746,9 @@ allow init kernel:process { getsched setsched };
 # swapon() needs write access to swap device
 # system/core/fs_mgr/fs_mgr.c - fs_mgr_swapon_all
 allow init swap_block_device:blk_file rw_file_perms;
-# Allow to change group owner and permissions for new swap setup in mmd
-allow init swap_block_device:blk_file setattr;
+# Allow updating zram permissions to grant mmd access. The zram[0-9]* file
+# can be either swap_block_device or ram_device.
+allow init { ram_device swap_block_device }:blk_file setattr;
 
 # Create and access /dev files without a specific type,
 # e.g. /dev/.coldboot_done, /dev/.booting

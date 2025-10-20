@@ -47,7 +47,7 @@ allow microdroid_manager self:global_capability_class_set sys_admin;
 
 # microdroid_manager needs to adjust the priority of the payload process.
 # It requires the sys_nice cap as well.
-allow microdroid_manager microdroid_app:process setsched;
+allow microdroid_manager microdroid_payload:process setsched;
 allow microdroid_manager self:global_capability_class_set sys_nice;
 
 # Allow microdroid_manager to remove capabilities from it's capability bounding set.
@@ -155,6 +155,7 @@ allow microdroid_manager extra_apk_file:dir create_dir_perms;
 
 # Allow microdroid_manager to handle tenant_apks
 allow microdroid_manager tenant_apk_file:dir create_dir_perms;
+allow microdroid_manager tenant_apk_file:file getattr;
 
 # Allow microdroid_manager to write kmsg_debug (stdio_to_kmsg).
 allow microdroid_manager kmsg_debug_device:chr_file w_file_perms;
@@ -194,6 +195,10 @@ allow microdroid_manager {
     proc_pressure_io
     proc_pressure_mem
 }:file r_file_perms;
+
+# Allow microdroid_manager to start & stop traced_relay service by setting
+# persist.traced.enable sysprop.
+set_prop(microdroid_manager, traced_enabled_prop);
 
 # Domains other than microdroid can't write extra_apks
 neverallow { domain -microdroid_manager -init -vendor_init } extra_apk_file:file no_w_file_perms;
