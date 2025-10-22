@@ -397,6 +397,7 @@ var (
 		"network_score":                          EXCEPTION_NO_FUZZER,
 		"network_time_update_service":            EXCEPTION_NO_FUZZER,
 		"nfc":                                    EXCEPTION_NO_FUZZER,
+		"npu":                                    EXCEPTION_NO_FUZZER,
 		"notification":                           EXCEPTION_NO_FUZZER,
 		"oem_lock":                               EXCEPTION_NO_FUZZER,
 		"ondevicepersonalization_system_service": EXCEPTION_NO_FUZZER,
