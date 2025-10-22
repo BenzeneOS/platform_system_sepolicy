@@ -524,7 +524,7 @@ var (
 		"usagestats":                             EXCEPTION_NO_FUZZER,
 		"usb":                                    EXCEPTION_NO_FUZZER,
 		"uprobestats_service":                    EXCEPTION_NO_FUZZER,
-		"uprobestats_bridge_service":             EXCEPTION_NO_FUZZER,
+		"uprobestats_bridge":                     EXCEPTION_NO_FUZZER,
 		"user":                                   EXCEPTION_NO_FUZZER,
 		"uwb":                                    EXCEPTION_NO_FUZZER,
 		"vcn_management":                         EXCEPTION_NO_FUZZER,
