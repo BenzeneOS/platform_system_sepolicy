@@ -522,6 +522,7 @@ updatelock                                u:object_r:updatelock_service:s0
 uri_grants                                u:object_r:uri_grants_service:s0
 usagestats                                u:object_r:usagestats_service:s0
 usb                                       u:object_r:usb_service:s0
+usb_auth                                  u:object_r:usb_auth_service:s0
 user                                      u:object_r:user_service:s0
 uprobestats_service                       u:object_r:uprobestats_service:s0
 uprobestats_bridge_service                u:object_r:uprobestats_bridge_service:s0

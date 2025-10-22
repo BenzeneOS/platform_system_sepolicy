@@ -407,6 +407,7 @@
 /system/bin/mmd_setup                                             mmd_setup_exec
 /system/bin/pmgd                                                  pmgd_exec
 /system/bin/usbd                                                  usbd_exec
+/system/bin/usbauthservice                                        usbauthservice_exec
 /system/bin/inputflinger                                          inputflinger_exec
 /system/bin/logd                                                  logd_exec
 /system/bin/lpdumpd                                               lpdumpd_exec
