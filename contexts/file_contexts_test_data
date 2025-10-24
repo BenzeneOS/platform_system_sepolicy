@@ -102,6 +102,7 @@
 /dev/block/dm-123                                                 dm_device
 /dev/block/dm                                                     block_device
 /dev/block/dm-                                                    block_device
+/dev/block/mapper/foo.apex                                        apex_dm_device
 /dev/block/ublkb0                                                 ublk_block_device
 /dev/block/ublkb123                                               ublk_block_device
 /dev/block/ublkb                                                  block_device

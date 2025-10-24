@@ -545,7 +545,7 @@ allow appdomain cameraserver:memfd_file { getattr map read write };
 neverallow { appdomain -bluetooth -network_stack -nfc } self:capability_class_set *;
 
 # Block device access.
-neverallow appdomain dev_type:blk_file { read write };
+neverallow appdomain {dev_type -apex_dm_device}:blk_file { read write };
 
 # Note: Try expanding list of app domains in the future.
 neverallow { untrusted_app isolated_app shell } graphics_device:chr_file { read write };
