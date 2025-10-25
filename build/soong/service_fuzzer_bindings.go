@@ -524,6 +524,7 @@ var (
 		"uri_grants":                             EXCEPTION_NO_FUZZER,
 		"usagestats":                             EXCEPTION_NO_FUZZER,
 		"usb":                                    EXCEPTION_NO_FUZZER,
+		"usb_auth":                               EXCEPTION_NO_FUZZER,
 		"uprobestats_service":                    EXCEPTION_NO_FUZZER,
 		"uprobestats_bridge":                     EXCEPTION_NO_FUZZER,
 		"user":                                   EXCEPTION_NO_FUZZER,

@@ -85,6 +85,8 @@ until_board_api(202604, `
     type native_serial_service,         service_manager_type;
 ')
 
+type usb_auth_service,        service_manager_type;
+
 ###
 ### Neverallow rules
 ###
