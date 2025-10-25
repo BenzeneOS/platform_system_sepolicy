@@ -92,6 +92,8 @@ allow domain ashmem_libcutils_device:chr_file rw_file_perms;
 allow domain tmpfs:file { getattr relabelfrom };
 allow domain ashmem_compat_memfd:file { read write getattr map relabelto };
 
+allow domain self:memfd_file { create read write getattr map };
+
 # Everyone can allocate memory via libcutils, and therefore will all need
 # access to the file containing the type that libcutils must use for
 # relabeling memfds.
@@ -1655,6 +1657,17 @@ neverallow {
   -untrusted_app_36
   -priv_app_36
 } ashmem_compat_memfd:file ioctl;
+
+neverallow {
+  domain
+  -untrusted_app_25
+  -untrusted_app_27
+  -untrusted_app_29
+  -untrusted_app_30
+  -untrusted_app_32
+  -untrusted_app_36
+  -priv_app_36
+} domain:memfd_file ioctl;
 
 neverallow { domain -traced_probes -init -vendor_init } debugfs_tracing_printk_formats:file *;
 

@@ -20,3 +20,4 @@ net_domain(untrusted_app_36)
 bluetooth_domain(untrusted_app_36)
 
 allowxperm untrusted_app_36 ashmem_compat_memfd:file ioctl ashmem_ioctls;
+allowxperm untrusted_app_36 domain:memfd_file ioctl ashmem_ioctls;

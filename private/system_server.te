@@ -24,6 +24,8 @@ type_transition system_server system_data_file:sock_file system_unsolzygote_sock
 
 allow system_server zygote_tmpfs:file { map read write };
 allow system_server appdomain_tmpfs:file { getattr map read write };
+allow system_server zygote:memfd_file { map read write };
+allow system_server appdomain:memfd_file { getattr map read write };
 
 # For Incremental Service to check if incfs is available
 allow system_server proc_filesystems:file r_file_perms;
@@ -1525,10 +1527,12 @@ neverallow system_server { ashmem_device ashmem_libcutils_device }:chr_file exec
 
 # TODO: deal with tmpfs_domain pub/priv split properly
 neverallow system_server system_server_tmpfs:file execute;
+neverallow system_server system_server:memfd_file execute;
 
 # Resources handed off by system_server_startup
 allow system_server system_server_startup:fd use;
 allow system_server system_server_startup_tmpfs:file { read write map };
+allow system_server system_server_startup:memfd_file { read write map };
 allow system_server system_server_startup:unix_dgram_socket write;
 
 # Allow system server to communicate to apexd
