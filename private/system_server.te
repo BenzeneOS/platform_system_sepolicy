@@ -1840,5 +1840,10 @@ get_prop(system_server, usb_userspace_aoa_enabled_prop)
 # Allow system_server to read the remote_provisioning.*.rkp_only property;
 get_prop(system_server,remote_prov_prop)
 
+# Allow system_server to read the zygote.zygote_next.server_ready property.
+get_prop(system_server, zygote_zygote_next_server_status_prop)
+# Allow system_server to read/write the persist.zygote.zygote_next.start_on_boot property.
+set_prop(system_server, zygote_zygote_next_boot_config_prop)
+
 # Read /proc/swaps for debugging and meminfo-related utilities.
 allow system_server proc_swaps:file { read open getattr };
