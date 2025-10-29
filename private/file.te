@@ -23,6 +23,9 @@ type fs_bpf_dmabuf, fs_type, bpffs_type;
 # /data/system/mediadrm
 type mediadrm_system_data_file, file_type, data_file_type, core_data_file_type;
 
+# /data/system/users/user.list
+type user_list_data_file, file_type, data_file_type, core_data_file_type;
+
 # /data/misc/storaged
 type storaged_data_file, file_type, data_file_type, core_data_file_type;
 
