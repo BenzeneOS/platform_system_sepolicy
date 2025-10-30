@@ -224,6 +224,7 @@ allow { early_virtmgr crosvm } $1:unix_stream_socket { ioctl getattr read write 
 # Let the client pass file descriptors to early_virtmgr and on to crosvm.
 allow { early_virtmgr crosvm } $1:fd use;
 allow { early_virtmgr crosvm } $1_tmpfs:file rw_file_perms;
+allow { early_virtmgr crosvm } $1:memfd_file rw_no_ioctl_file_perms;
 # Let the client use file descriptors created by early_virtmgr.
 allow $1 early_virtmgr:fd use;
 # Allow piping console log to the client
@@ -825,6 +826,7 @@ define(`can_profile_heap', `
   # Allow to read and write to heapprofd shmem.
   # The client needs to read the read and write pointers in order to write.
   allow $1 heapprofd_tmpfs:file { read write getattr map };
+  allow $1 heapprofd:memfd_file { read write getattr map };
   # Use shared memory received over the unix socket.
   allow $1 heapprofd:fd use;
 

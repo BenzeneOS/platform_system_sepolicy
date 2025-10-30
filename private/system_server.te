@@ -1771,6 +1771,7 @@ allow system_server pre_reboot_dexopt_file:dir { getattr search };
 # system_server needs to copy the new service-art.jar to a memfd and reopen it with the path
 # /proc/self/fd/<fd> with a classloader.
 allow system_server system_server_tmpfs:file open;
+allow system_server system_server:memfd_file open;
 
 # Allow system_server to read from postinstall scripts through STDIN, to check if the
 # otapreopt_script is still alive.
