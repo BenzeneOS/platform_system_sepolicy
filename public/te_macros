@@ -346,6 +346,8 @@ typeattribute $1 $2;
 define(`hal_client_domain', `
 typeattribute $1 halclientdomain;
 typeattribute $1 $2_client;
+allow $1 $2:memfd_file { read write getattr map };
+allow $2 $1:memfd_file { read write getattr map };
 
 # TODO(b/34170079): Make the inclusion of the rules below conditional also on
 # non-Treble devices. For now, on non-Treble device, always grant clients of a

@@ -76,7 +76,7 @@ mlsconstrain anon_inode { ioctl read write create getattr setattr lock relabelfr
 # Subject must dominate object unless the subject is trusted.
 mlsconstrain dir { open search getattr setattr rename add_name remove_name reparent rmdir }
 	     (t2 != app_data_file_type or l1 dom l2 or t1 == mlstrustedsubject);
-mlsconstrain { file sock_file } { open setattr unlink link rename }
+mlsconstrain { file sock_file memfd_file } { open setattr unlink link rename }
 	     ( (t2 != app_data_file_type and t2 != appdomain_tmpfs) or l1 dom l2 or t1 == mlstrustedsubject);
 
 # For symlinks in app data files, require equivalence in order to manipulate or follow (read).
