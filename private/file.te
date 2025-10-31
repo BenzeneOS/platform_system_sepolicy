@@ -285,3 +285,5 @@ until_board_api(202604, `type sysfs_usbcore, fs_type, sysfs_type;')
 type wifi_vendor_data_file, file_type, data_file_type;
 
 type zygote_next_socket, file_type, coredomain_socket;
+
+until_board_api(202604, `type sysfs_block, fs_type, sysfs_type;')
