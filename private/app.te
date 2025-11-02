@@ -260,18 +260,18 @@ allow appdomain system_server:tcp_socket { read write getattr getopt shutdown };
 allow appdomain vold:fd use;
 
 # Communication with other apps via fifos
-allow appdomain appdomain:fifo_file rw_file_perms;
+allow { appdomain -pcc_component } appdomain:fifo_file rw_file_perms;
 
 # Communicate with surfaceflinger.
 allow appdomain surfaceflinger:unix_stream_socket { read write setopt getattr getopt shutdown };
 
 # App sandbox file accesses.
-allow { appdomain -isolated_app_all -mlstrustedsubject -sdk_sandbox_all } {
+allow { appdomain -isolated_app_all -pcc_component -mlstrustedsubject -sdk_sandbox_all } {
   app_data_file
   privapp_data_file
   is_flag_enabled(RELEASE_UNLOCKED_STORAGE_API, `storage_area_content_file')
 }:dir create_dir_perms;
-allow { appdomain -isolated_app_all -mlstrustedsubject -sdk_sandbox_all } {
+allow { appdomain -isolated_app_all -pcc_component -mlstrustedsubject -sdk_sandbox_all } {
   app_data_file
   privapp_data_file
   is_flag_enabled(RELEASE_UNLOCKED_STORAGE_API, `storage_area_content_file')
@@ -291,7 +291,7 @@ allowxperm { appdomain -isolated_app_all -mlstrustedsubject -sdk_sandbox_all } {
 }:file ioctl FS_IOC_MEASURE_VERITY;
 
 # Access via already open fds is ok even for mlstrustedsubject.
-allow { appdomain -isolated_app_all -sdk_sandbox_all } {
+allow { appdomain -isolated_app_all -pcc_component -sdk_sandbox_all } {
   app_data_file
   privapp_data_file
   system_app_data_file
@@ -344,10 +344,10 @@ allow appdomain {vendor_public_framework_file vendor_public_lib_file}:dir r_dir_
 allow appdomain {vendor_public_framework_file vendor_public_lib_file}:file { execute read open getattr map };
 
 # Read/write wallpaper file (opened by system).
-allow appdomain wallpaper_file:file { getattr read write map };
+allow { appdomain -pcc_component } wallpaper_file:file { getattr read write map };
 
 # Read/write cached ringtones (opened by system).
-allow appdomain ringtone_file:file { getattr read write map };
+allow { appdomain -pcc_component } ringtone_file:file { getattr read write map };
 
 # Read ShortcutManager icon files (opened by system).
 allow appdomain shortcut_manager_icons:file { getattr read map };
@@ -427,7 +427,7 @@ allow appdomain hal_graphics_composer:fd use;
 # hence no sock_file or connectto permission. This appears to be how
 # Chrome works, may need to be updated as more apps using isolated services
 # are examined.
-allow appdomain appdomain:unix_stream_socket { getopt getattr read write shutdown };
+allow { appdomain -pcc_component } appdomain:unix_stream_socket { getopt getattr read write shutdown };
 
 # Backup ability for every app. BMS opens and passes the fd
 # to any app that has backup ability. Hence, no open permissions here.
