@@ -220,8 +220,8 @@ def TestIsolatedAttributeConsistency(test_policy):
         "codec2_config_prop": ["file"],
         "device_config_nnapi_native_prop": ["file"],
         "gpu_device": ["dir"],
-        "hal_allocator_default": ["binder", "fd"],
-        "hal_codec2": ["binder", "fd"],
+        "hal_allocator_default": ["binder", "fd", "memfd_file"],
+        "hal_codec2": ["binder", "fd", "memfd_file"],
         "hal_codec2_hwservice": ["hwservice_manager"],
         "hal_graphics_allocator": ["binder", "fd"],
         "hal_graphics_allocator_service": ["service_manager"],
@@ -288,7 +288,7 @@ def TestIsolatedAttributeConsistency(test_policy):
             if not checkIsolatedComputeAllowed(tctx, tclass) and (
                 tctx not in permissionAllowList
                 or tclass not in permissionAllowList[tctx]
-                or (p == "write")
+                or (p == "write" and tclass != "memfd_file")
                 or (p == "rw_file_perms")
             ):
                 violated_permissions += [perm]
