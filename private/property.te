@@ -116,6 +116,7 @@ system_vendor_config_prop(mmd_prop)
 system_vendor_config_prop(mmd_shared_prop)
 system_vendor_config_prop(prefetch_boot_prop)
 system_vendor_config_prop(sensors_hal_prop)
+system_vendor_config_prop(strongbox_prop)
 system_vendor_config_prop(usb_disable_when_locked_prop)
 system_vendor_config_prop(userdata_alias_remove_prop)
 until_board_api(202604, `
