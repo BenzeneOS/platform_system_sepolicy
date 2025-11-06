@@ -863,6 +863,7 @@ hypervisor.virtualizationmanager.dump_device_tree u:object_r:hypervisor_virtuali
 # hypervisor.*: configured by the vendor to advertise capabilities of their
 # hypervisor to virtualizationservice.
 hypervisor.memory_reclaim.supported u:object_r:hypervisor_restricted_prop:s0 exact bool
+hypervisor.memory_share.supported u:object_r:hypervisor_restricted_prop:s0 exact bool
 
 ro.config.per_app_memcg         u:object_r:lmkd_config_prop:s0 exact bool
 ro.lmk.critical                 u:object_r:lmkd_config_prop:s0 exact int
