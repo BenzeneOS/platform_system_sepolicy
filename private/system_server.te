@@ -104,7 +104,6 @@ allow system_server zygote:process sigchld;
 # May kill zygote (or its child processes) on crashes.
 allow system_server {
   app_zygote
-  native_app_zygote
   crash_dump
   crosvm
   virtualizationmanager
@@ -297,9 +296,6 @@ allow system_server webview_zygote:unix_stream_socket { read write connectto set
 
 # Communicate over a socket created by app_zygote.
 allow system_server app_zygote:unix_stream_socket { read write connectto setopt };
-
-# Communicate over a socket created by native_app_zygote.
-allow system_server native_app_zygote:unix_stream_socket { read write connectto setopt };
 
 # Communicate with a virtual machine (b/396144272)
 allow system_server virtualizationmanager:fd use;
