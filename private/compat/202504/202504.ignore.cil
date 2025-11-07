@@ -31,5 +31,4 @@
     anomaly_detector_service
     remote_prov_prop
     wifi_vendor_data_file
-    mmd_setup
   ))
