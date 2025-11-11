@@ -1,5 +1,6 @@
 ;; types removed from current policy
 (type apk_verity_prop)
+(type early_virtmgr)
 (type ota_data_file)
 (type otadexopt_service)
 (type postinstall_apex_mnt_dir)
