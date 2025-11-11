@@ -1,3 +1,12 @@
+until_board_api(202604, `
+type virtualizationmanager_vendor, domain, coredomain, virtualizationmanager_domain;
+')
+
+# Ensure that coredomain may not transition to virtualizationmanager_vendor.
+neverallow coredomain virtualizationmanager_vendor:process transition;
+# Ensure that non-coredomain may not transition to non-vendor virtualizationmanager.
+neverallow { domain -coredomain } { virtualizationmanager_domain -virtualizationmanager_vendor }:process transition;
+
 # Allow virtualizationmanager_domain to communicate use, read and write over the adb connection.
 allow virtualizationmanager_domain adbd:fd use;
 allow virtualizationmanager_domain adbd:unix_stream_socket { getattr read write };
