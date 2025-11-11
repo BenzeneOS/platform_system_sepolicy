@@ -106,7 +106,7 @@ allow system_server {
   app_zygote
   crash_dump
   crosvm
-  virtualizationmanager
+  virtualizationmanager_domain
   webview_zygote
   zygote
 }:process { getpgid sigkill signull setsched };
@@ -206,7 +206,7 @@ allow system_server hal_camera:process { getsched setsched };
 allow system_server mediaserver:process { getsched setsched };
 allow system_server bootanim:process { getsched setsched };
 # Set scheduling info for VMs (b/375058190)
-allow system_server { virtualizationmanager crosvm }:process { getsched setsched };
+allow system_server { virtualizationmanager_domain crosvm }:process { getsched setsched };
 
 # Set scheduling info for psi monitor thread.
 # TODO: delete this line b/131761776
@@ -298,8 +298,8 @@ allow system_server webview_zygote:unix_stream_socket { read write connectto set
 allow system_server app_zygote:unix_stream_socket { read write connectto setopt };
 
 # Communicate with a virtual machine (b/396144272)
-allow system_server virtualizationmanager:fd use;
-allow system_server virtualizationmanager:vsock_socket { getopt read write };
+allow system_server priv_app_virtualizationmanager:fd use;
+allow system_server priv_app_virtualizationmanager:vsock_socket { getopt read write };
 
 # Perform Binder IPC.
 binder_use(system_server)

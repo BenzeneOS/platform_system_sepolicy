@@ -1862,7 +1862,7 @@ neverallow {
   -apexd
   -installd
   -priv_app
-  -virtualizationmanager
+  -virtualizationmanager_domain
   -update_provider # WARNING: USING THIS ATTRIBUTE WILL CAUSE CTS TO FAIL!
 } staging_data_file:dir *;
 neverallow {
@@ -1876,7 +1876,7 @@ neverallow {
   -installd
   -priv_app
   -shell
-  -virtualizationmanager
+  -virtualizationmanager_domain
   -crosvm
   -update_provider # WARNING: USING THIS ATTRIBUTE WILL CAUSE CTS TO FAIL!
 } staging_data_file:file *;
@@ -2156,7 +2156,7 @@ full_treble_only(`
     # TODO(b/37168747): clean up fwk access to /vendor
     -crash_dump
     -crosvm # loads vendor-specific disk images
-    -virtualizationmanager # loads vendor-specific disk images
+    -virtualizationmanager_domain # loads vendor-specific disk images
     -early_virtmgr # loads vendor-specific disk images
     -init # starts vendor executables
     -kernel # loads /vendor/firmware
@@ -2334,7 +2334,7 @@ neverallow {
 
     # these are expected
     is_flag_enabled(RELEASE_AVF_ENABLE_EARLY_VM, `-early_virtmgr')
-    -virtualizationmanager
+    -virtualizationmanager_domain
     -virtualizationservice
     -adbd_common # maybe should move to emulator/virtual device specific policy
     -traced # traced listens to connections from guest VMs

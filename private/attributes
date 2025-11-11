@@ -35,3 +35,7 @@ expandattribute gpu_sphal_domain false;
 
 hal_attribute(bluetooth_lpp);
 ') # until_board_api(202604)
+
+until_board_api(202604, `
+attribute virtualizationmanager_domain;
+') # until_board_api(202604)

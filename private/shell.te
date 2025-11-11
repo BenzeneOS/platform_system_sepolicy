@@ -596,7 +596,7 @@ neverallow {
   -dumpstate
   -installd
   userdebug_or_eng(`-uncrypt')
-  userdebug_or_eng(`-virtualizationmanager')
+  userdebug_or_eng(`-virtualizationmanager_domain')
   userdebug_or_eng(`-virtualizationservice')
   userdebug_or_eng(`-crosvm')
 } shell_data_file:file open;
@@ -651,7 +651,7 @@ neverallow {
   -simpleperf_app_runner
   -system_server # why?
   userdebug_or_eng(`-uncrypt')
-  userdebug_or_eng(`-virtualizationmanager')
+  userdebug_or_eng(`-virtualizationmanager_domain')
   userdebug_or_eng(`-crosvm')
 } shell_data_file:dir search;
 

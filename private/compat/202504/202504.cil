@@ -3,6 +3,7 @@
 (type ota_data_file)
 (type otadexopt_service)
 (type postinstall_apex_mnt_dir)
+(type virtualizationmanager)
 
 ;; mapping information from ToT policy's types to 202504 policy's types.
 (expandtypeattribute (DockObserver_service_202504) true)
