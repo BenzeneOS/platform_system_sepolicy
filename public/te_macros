@@ -179,6 +179,7 @@ dontaudit su $1_userfaultfd:anon_inode *;
 neverallow { domain -$1 } $1_userfaultfd:anon_inode *;
 ')
 
+until_board_api(202604, `
 ####################################
 # virtualizationservice_use(domain)
 # Allow domain to create and communicate with a virtual machine using
@@ -217,7 +218,7 @@ allow $1_virtualizationmanager $1:lnk_file read;
 # Allow owner of a VM to kill the VM forcibly, by sending sigkill to the process group
 # where virtmgr is the leader
 allow $1 crosvm:process sigkill;
-')
+') # virtualizationservice_use
 
 ####################################
 # early_virtmgr_use(domain)
@@ -250,7 +251,8 @@ allow $1_early_virtmgr $1:lnk_file read;
 # early_virtmgr to be client of secretkeeper HAL. It ferries SecretManagement messages from pVM
 # to HAL.
 hal_client_domain($1_early_virtmgr, hal_secretkeeper)
-')
+') # early_virtmgr_use
+') # until_board_api
 
 #####################################
 # app_domain(domain)
