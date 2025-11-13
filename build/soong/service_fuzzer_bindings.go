@@ -272,6 +272,7 @@ var (
 		"content_suggestions":                                                  EXCEPTION_NO_FUZZER,
 		"content_restriction":                                                  EXCEPTION_NO_FUZZER,
 		"contexthub":                                                           EXCEPTION_NO_FUZZER,
+		"contextual_mode":                                                      EXCEPTION_NO_FUZZER,
 		"contextual_search":                                                    EXCEPTION_NO_FUZZER,
 		"country_detector":                                                     EXCEPTION_NO_FUZZER,
 		"coverage":                                                             EXCEPTION_NO_FUZZER,
