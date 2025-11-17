@@ -19,7 +19,7 @@
     trusty_coverage_prop
     omapi
     omapi_exec
-    omapi_server
+    omapi_service
     npu_service
     serialservice
     serialservice_exec
