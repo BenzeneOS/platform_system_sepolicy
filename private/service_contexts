@@ -71,6 +71,7 @@ android.hardware.media.c2.IComponentStore/default1                   u:object_r:
 android.hardware.media.c2.IComponentStore/default2                   u:object_r:hal_codec2_service:s0
 android.hardware.media.c2.IComponentStore/software                   u:object_r:hal_codec2_service:s0
 android.hardware.memtrack.IMemtrack/default                          u:object_r:hal_memtrack_service:s0
+android.hardware.motioncontext.IMotionContext/default                u:object_r:hal_motioncontext_service:s0
 android.hardware.net.nlinterceptor.IInterceptor/default              u:object_r:hal_nlinterceptor_service:s0
 android.hardware.nfc.INfc/default                                    u:object_r:hal_nfc_service:s0
 starting_at_board_api(202604, `

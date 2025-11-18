@@ -86,6 +86,7 @@ var (
 		"android.hardware.media.c2.IComponentStore/default2":                                 EXCEPTION_NO_FUZZER,
 		"android.hardware.media.c2.IComponentStore/software":                                 []string{"libcodec2-aidl-fuzzer"},
 		"android.hardware.memtrack.IMemtrack/default":                                        EXCEPTION_NO_FUZZER,
+		"android.hardware.motioncontext.IMotionContext/default":                              []string{"android.hardware.motioncontext-service_fuzzer"},
 		"android.hardware.net.nlinterceptor.IInterceptor/default":                            EXCEPTION_NO_FUZZER,
 		"android.hardware.nfc.INfc/default":                                                  []string{"nfc_service_fuzzer"},
 		"android.hardware.npu.IScheduling/default":                                           EXCEPTION_NO_FUZZER,
