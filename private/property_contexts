@@ -347,6 +347,10 @@ persist.apexd.          u:object_r:apexd_prop:s0
 persist.vendor.apex.    u:object_r:apexd_select_prop:s0
 ro.boot.vendor.apex.    u:object_r:apexd_select_prop:s0
 
+# Property that indicates if a preinstalled erofs apex can be file-backed mount.
+# The property is set by apexd at runtime after test mounting.
+apexd.config.runtime.erofs_file_backed_mount       u:object_r:apexd_private_prop:s0 exact bool
+
 # Property that indicates if an apex is ready: apex.<apex-name>.ready
 apex.                   u:object_r:apex_ready_prop:s0 prefix bool
 
