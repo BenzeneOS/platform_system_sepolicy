@@ -2348,6 +2348,7 @@ neverallow {
     domain
 
     # these are expected
+    is_flag_enabled(RELEASE_AISEAL_FRAMEWORK, `-aisealhostservice')
     -early_virtmgr_domain
     -virtualizationmanager_domain
     -virtualizationservice
