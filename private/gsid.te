@@ -82,6 +82,9 @@ allow gsid sdcard_block_device:blk_file r_file_perms;
 # requirement, but the kernel does not implement FIEMAP support for VFAT.
 allow gsid self:global_capability_class_set sys_rawio;
 
+# Apps send data to gsid through share memory FD.
+allow gsid appdomain:memfd_file { read write getattr map };
+
 # Allow rules for gsi_tool.
 userdebug_or_eng(`
   # gsi_tool passes the system image over the adb connection, via stdin.
