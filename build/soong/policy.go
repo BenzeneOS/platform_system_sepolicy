@@ -253,6 +253,17 @@ func (c *policyConf) transformPolicyToConf(ctx android.ModuleContext) android.Ou
 		return findPolicyConfOrder(srcs[x].Base()) < findPolicyConfOrder(srcs[y].Base())
 	})
 
+	// Policy files may not all end with a new line. This will be an issue
+	// when concatenating them in the next step. Create a "newline" file
+	// and insert it between each source file.
+	newlineFile := android.PathForModuleOut(ctx, "newline")
+	rule.Command().Text("echo").FlagWithOutput("> ", newlineFile)
+	rule.Temporary(newlineFile)
+	var srcsWithNewline android.Paths
+	for _, src := range srcs {
+		srcsWithNewline = append(srcsWithNewline, src, newlineFile)
+	}
+
 	flags := c.getBuildFlags(ctx)
 	rule.Command().Tool(ctx.Config().PrebuiltBuildTool(ctx, "m4")).
 		Flag("--fatal-warnings").
@@ -275,7 +286,7 @@ func (c *policyConf) transformPolicyToConf(ctx android.ModuleContext) android.Ou
 		Flag(boardApiLevelToM4Macro(ctx, c.properties.Board_api_level)).
 		Flags(flagsToM4Macros(flags)).
 		Flag("-s").
-		Inputs(srcs).
+		Inputs(srcsWithNewline).
 		Text("> ").Output(conf)
 
 	if proptools.Bool(c.properties.Only_neverallow_rules) {
@@ -284,6 +295,7 @@ func (c *policyConf) transformPolicyToConf(ctx android.ModuleContext) android.Ou
 			Text(conf.String())  // output (in-place filtering)
 	}
 
+	rule.DeleteTemporaryFiles()
 	rule.Build("conf", "Transform policy to conf: "+ctx.ModuleName())
 	return conf
 }
