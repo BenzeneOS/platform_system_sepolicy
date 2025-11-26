@@ -36,6 +36,7 @@ userdebug_or_eng(`
   allow domain su:fd use;
   allow domain su:unix_stream_socket { connectto getattr getopt read write shutdown };
   allow domain su:unix_dgram_socket sendto;
+  allow domain su:memfd_file { getattr read write map };
 
   allow { domain -init } su:binder { call transfer };
 
