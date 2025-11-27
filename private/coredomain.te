@@ -180,7 +180,6 @@ full_treble_only(`
   neverallow {
     coredomain
     -atrace
-    -bpfloader
     -dumpstate
     -gpuservice
     -init
