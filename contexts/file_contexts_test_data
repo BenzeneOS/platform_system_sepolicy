@@ -988,8 +988,8 @@
 /data/misc/apexdata/com.android.uwb/test                          apex_uwb_data_file
 /data/misc/apexdata/com.android.uwb/log                           apex_uwb_data_file
 /data/misc/apexdata/com.android.uwb/log/test                      apex_uwb_data_file
-/data/misc/apexdata/com.android.wifi                              apex_system_server_data_file
-/data/misc/apexdata/com.android.wifi/test                         apex_system_server_data_file
+/data/misc/apexdata/com.android.wifi                              apex_wifi_data_file
+/data/misc/apexdata/com.android.wifi/test                         apex_wifi_data_file
 /data/misc/apexrollback                                           apex_rollback_data_file
 /data/misc/apexrollback/test                                      apex_rollback_data_file
 /data/misc/apns                                                   radio_data_file
@@ -1189,10 +1189,10 @@
 /data/misc_de/99/apexdata/com.android.permission/test             apex_system_server_data_file
 /data/misc_ce/0/apexdata/com.android.permission                   apex_system_server_data_file
 /data/misc_ce/99/apexdata/com.android.permission/test             apex_system_server_data_file
-/data/misc_de/0/apexdata/com.android.wifi                         apex_system_server_data_file
-/data/misc_de/99/apexdata/com.android.wifi/test                   apex_system_server_data_file
-/data/misc_ce/0/apexdata/com.android.wifi                         apex_system_server_data_file
-/data/misc_ce/99/apexdata/com.android.wifi/test                   apex_system_server_data_file
+/data/misc_de/0/apexdata/com.android.wifi                         apex_wifi_data_file
+/data/misc_de/99/apexdata/com.android.wifi/test                   apex_wifi_data_file
+/data/misc_ce/0/apexdata/com.android.wifi                         apex_wifi_data_file
+/data/misc_ce/99/apexdata/com.android.wifi/test                   apex_wifi_data_file
 /data/misc_de/0/apexdata/com.android.uwb                          apex_system_server_data_file
 /data/misc_de/99/apexdata/com.android.uwb/test                    apex_system_server_data_file
 /data/misc_ce/0/apexdata/com.android.uwb                          apex_system_server_data_file
