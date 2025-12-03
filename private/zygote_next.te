@@ -8,7 +8,7 @@ init_daemon_domain(zygote_next)
 set_prop(zygote_next, zygote_zygote_next_server_status_prop)
 
 # Override DAC on files and switch uid/gid
-allow zygote_next self:global_capability_class_set { dac_override setgid setuid };
+allow zygote_next self:global_capability_class_set { dac_override dac_read_search setgid setuid fowner chown };
 
 # Drop capabilities from bounding set
 # sys_admin is required to install the seccomp filter
@@ -18,6 +18,13 @@ allow zygote_next self:global_capability_class_set { sys_admin setpcap };
 allow zygote_next self:process setcurrent;
 allow zygote_next isolated_app:process dyntransition;
 allow zygote_next native_app_zygote:process dyntransition;
+
+# Control cgroups.
+allow zygote_next cgroup:dir create_dir_perms;
+allow zygote_next cgroup:{ file lnk_file } { r_file_perms setattr };
+allow zygote_next cgroup_v2:dir create_dir_perms;
+allow zygote_next cgroup_v2:{ file lnk_file } { r_file_perms setattr };
+allow zygote_next self:global_capability_class_set sys_admin;
 
 # The Native Zygote must be able to inspect /dev/pmsg0, which is used by the
 # logger, as it needs to get the fd and close it before fork
@@ -29,6 +36,12 @@ allow zygote_next seapp_contexts_file:file r_file_perms;
 selinux_check_context(zygote_next)
 # Check SELinux permissions
 selinux_check_access(zygote_next)
+
+# Ignore spurious denials
+# fsetid can be checked as a consequence of chmod when using cgroup v2 uid/pid hierarchy. This is
+# done to determine if the file should inherit setgid. In this case, setgid on the file is
+# undesirable, so suppress the denial.
+dontaudit zygote_next self:global_capability_class_set { sys_resource fsetid };
 
 # Allow Native Zygote to change its niceness
 allow zygote_next self:global_capability_class_set sys_nice;
