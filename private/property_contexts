@@ -1933,3 +1933,6 @@ ro.gms.wallet.se_capability u:object_r:wallet_prop:s0 exact int
 
 # AiSeal properties
 service.aiseal. u:object_r:aiseal_prop:s0
+
+# Wear dynamic thermal profile property
+thermal.dynamic_config_profile    u:object_r:thermal_profile_prop:s0 exact enum default setup kids_setup kids
