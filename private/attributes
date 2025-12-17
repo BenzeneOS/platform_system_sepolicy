@@ -44,4 +44,4 @@ hal_attribute(bluetooth_lpp);
 until_board_api(202604, `
 attribute virtualizationmanager_domain;
 attribute early_virtmgr_domain;
-# ') # starting_at_board_api(202604)
+') # until_board_api(202604)
