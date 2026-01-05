@@ -852,6 +852,7 @@ ro.crypto.volume.options                        u:object_r:vold_config_prop:s0 e
 external_storage.projid.enabled   u:object_r:storage_config_prop:s0 exact bool
 external_storage.sdcardfs.enabled u:object_r:storage_config_prop:s0 exact bool
 external_storage.cross_user.enabled u:object_r:storage_config_prop:s0 exact bool
+external_storage.packedssa.enabled u:object_r:storage_config_prop:s0 exact bool
 ro.fuse.bpf.enabled u:object_r:storage_config_prop:s0 exact bool
 ro.fuse.bpf.is_running u:object_r:vold_status_prop:s0 exact bool
 
