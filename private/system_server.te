@@ -591,6 +591,9 @@ r_dir_file(system_server, vendor_app_file)
 r_dir_file(system_server, vendor_framework_file)
 r_dir_file(system_server, vendor_overlay_file)
 
+# Access /vendor/etc/dma_heap.json
+allow system_server vendor_dma_heap_config_file:file r_file_perms;
+
 # Manage /data/app-private.
 allow system_server apk_private_data_file:dir create_dir_perms;
 allow system_server apk_private_data_file:file create_file_perms;
