@@ -1654,7 +1654,7 @@ neverallow {
   -untrusted_app_29
   -untrusted_app_30
   -untrusted_app_32
-  -untrusted_app
+  -untrusted_app_36
   -priv_app_36
 } domain:memfd_file ioctl;
 
@@ -1665,7 +1665,7 @@ neverallowxperm {
   -untrusted_app_29
   -untrusted_app_30
   -untrusted_app_32
-  -untrusted_app
+  -untrusted_app_36
   -priv_app_36
 } domain:memfd_file ioctl ashmem_ioctls;
 
