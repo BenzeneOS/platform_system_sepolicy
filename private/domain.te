@@ -1655,7 +1655,7 @@ neverallow {
   -untrusted_app_30
   -untrusted_app_32
   -untrusted_app
-  -priv_app
+  -priv_app_36
 } domain:memfd_file ioctl;
 
 neverallowxperm {
@@ -1666,7 +1666,7 @@ neverallowxperm {
   -untrusted_app_30
   -untrusted_app_32
   -untrusted_app
-  -priv_app
+  -priv_app_36
 } domain:memfd_file ioctl ashmem_ioctls;
 
 neverallow { domain -traced_probes -init -vendor_init } debugfs_tracing_printk_formats:file *;
@@ -1708,8 +1708,8 @@ neverallow {
   -system_server
 } self:global_capability_class_set sys_ptrace;
 
-# Limit ability to generate hardware unique device ID attestations to priv_apps
-neverallow { domain -priv_app -gmscore_app } *:keystore2_key gen_unique_id;
+# Limit ability to generate hardware unique device ID attestations to priv_app_alls
+neverallow { domain -priv_app_all -gmscore_app } *:keystore2_key gen_unique_id;
 neverallow { domain -system_server } *:keystore2_key use_dev_id;
 neverallow { domain -system_server } keystore:keystore2 { clear_ns lock reset unlock };
 
@@ -1886,7 +1886,7 @@ neverallow {
   -system_server
   -apexd
   -installd
-  -priv_app
+  -priv_app_all
   -virtualizationmanager_domain
   -update_provider # WARNING: USING THIS ATTRIBUTE WILL CAUSE CTS TO FAIL!
 } staging_data_file:dir *;
@@ -1899,7 +1899,7 @@ neverallow {
   -adbd
   -kernel
   -installd
-  -priv_app
+  -priv_app_all
   -shell
   -virtualizationmanager_domain
   -crosvm
@@ -2335,7 +2335,7 @@ neverallow {
   isolated_app_all
   ephemeral_app
   pcc_component
-  priv_app
+  priv_app_all
   sdk_sandbox_all
   untrusted_app_all
 } system_app_data_file:dir_file_class_set { create unlink open };
