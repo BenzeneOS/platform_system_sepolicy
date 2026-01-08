@@ -308,4 +308,5 @@ neverallowxperm priv_app domain:netlink_route_socket nlmsg RTM_GETLINK;
 
 # TODO(b/443130838): Remove this for priv_app when the domains
 # are split at SDK version 37. SDK version 37+ should not have this.
+allow priv_app domain:memfd_file ioctl;
 allowxperm priv_app domain:memfd_file ioctl ashmem_ioctls;
