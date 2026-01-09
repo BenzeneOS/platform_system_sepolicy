@@ -307,8 +307,8 @@ allow system_server app_zygote:unix_stream_socket { read write connectto setopt 
 allow system_server native_app_zygote:unix_stream_socket { read write connectto setopt };
 
 # Communicate with a virtual machine (b/396144272)
-allow system_server priv_app_virtualizationmanager:fd use;
-allow system_server priv_app_virtualizationmanager:vsock_socket { getopt read write };
+allow system_server priv_app_all_virtualizationmanager:fd use;
+allow system_server priv_app_all_virtualizationmanager:vsock_socket { getopt read write };
 
 # Perform Binder IPC.
 binder_use(system_server)

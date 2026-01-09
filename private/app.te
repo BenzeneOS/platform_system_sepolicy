@@ -9,7 +9,7 @@ r_dir_file({
   -isolated_app_all
   -network_stack
   -platform_app
-  -priv_app
+  -priv_app_all
   -shell
   -sdk_sandbox_all
   -system_app
@@ -24,7 +24,7 @@ userdebug_or_eng(`
     -isolated_app_all
     -network_stack
     -platform_app
-    -priv_app
+    -priv_app_all
     -shell
     -su
     -sdk_sandbox_all
