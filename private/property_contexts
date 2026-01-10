@@ -1902,6 +1902,8 @@ trusty.widevine_vm.enabled           u:object_r:drm_config_prop:s0 exact bool
 # Sets the path used by Widevine HALs to find correct library for the widevine
 # service provider location
 widevine.liboemcrypto.path          u:object_r:drm_config_prop:s0 exact string
+# Indicates that content decryption will be done on the VM
+trusty.widevine_vm_with_decrypt.enabled u:object_r:drm_config_prop:s0 exact bool
 
 # Properties for mmd
 mmd. u:object_r:mmd_prop:s0
