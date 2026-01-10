@@ -307,8 +307,8 @@ allow system_server app_zygote:unix_stream_socket { read write connectto setopt 
 allow system_server native_app_zygote:unix_stream_socket { read write connectto setopt };
 
 # Communicate with a virtual machine (b/396144272)
-allow system_server priv_app_virtualizationmanager:fd use;
-allow system_server priv_app_virtualizationmanager:vsock_socket { getopt read write };
+allow system_server priv_app_all_virtualizationmanager:fd use;
+allow system_server priv_app_all_virtualizationmanager:vsock_socket { getopt read write };
 
 # Perform Binder IPC.
 binder_use(system_server)
@@ -590,6 +590,9 @@ get_prop(system_server, input_device_config_prop)
 r_dir_file(system_server, vendor_app_file)
 r_dir_file(system_server, vendor_framework_file)
 r_dir_file(system_server, vendor_overlay_file)
+
+# Access /vendor/etc/dma_heap.json
+allow system_server vendor_dma_heap_config_file:file r_file_perms;
 
 # Manage /data/app-private.
 allow system_server apk_private_data_file:dir create_dir_perms;
