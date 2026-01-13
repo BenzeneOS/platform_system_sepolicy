@@ -262,6 +262,10 @@ allow appdomain system_server:fifo_file rw_file_perms;
 allow appdomain system_server:unix_stream_socket { read write setopt getattr getopt shutdown };
 allow appdomain system_server:tcp_socket { read write getattr getopt shutdown };
 
+# Use pipes and sockets provided by aoad via binder or local socket.
+allow appdomain aoad:fd use;
+allow appdomain aoad:unix_stream_socket { read write getattr getopt setattr lock append shutdown };
+
 # For AppFuse.
 allow appdomain vold:fd use;
 

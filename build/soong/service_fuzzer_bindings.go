@@ -244,6 +244,7 @@ var (
 		"authentication_policy":                                                EXCEPTION_NO_FUZZER,
 		"blob_store":                                                           EXCEPTION_NO_FUZZER,
 		"gsiservice":                                                           EXCEPTION_NO_FUZZER,
+		"aoad":                                                                 []string{"aoad_fuzzer"},
 		"appops":                                                               EXCEPTION_NO_FUZZER,
 		"appwidget":                                                            EXCEPTION_NO_FUZZER,
 		"artd":                                                                 []string{"artd_fuzzer"},
