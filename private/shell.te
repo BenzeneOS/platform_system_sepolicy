@@ -606,7 +606,7 @@ neverallow {
   userdebug_or_eng(`-uncrypt')
   userdebug_or_eng(`-virtualizationmanager_domain')
   userdebug_or_eng(`-virtualizationservice')
-  userdebug_or_eng(`-crosvm')
+  userdebug_or_eng(`-crosvm_domain')
 } shell_data_file:file open;
 
 # In addition to the symlink reading restrictions above, restrict
@@ -660,7 +660,7 @@ neverallow {
   -system_server # why?
   userdebug_or_eng(`-uncrypt')
   userdebug_or_eng(`-virtualizationmanager_domain')
-  userdebug_or_eng(`-crosvm')
+  userdebug_or_eng(`-crosvm_domain')
 } shell_data_file:dir search;
 
 # Restrict execute from /data/local/tmp directories. This directory contains
