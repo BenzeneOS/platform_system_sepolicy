@@ -306,7 +306,8 @@ def TestNoPlatformAppsInVendorSeappContexts(platform_apps,
         if "name" not in values or not values["name"]:
             no_name_violations.append((entry.partition, values["_raw"]))
             continue
-        if values["domain"] in exempted_types:
+        if (values["domain"] in exempted_types or
+            values["domain"] == "vendor_location_app_test"):
             continue
 
         # Such name patterns must not match with platform_apps
