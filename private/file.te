@@ -308,3 +308,6 @@ until_board_api(202604, `type binderfs_logs_state_hashed, fs_type;')
 
 # /sys/kernel/security/safesetid/uid_allowlist_policy
 type uid_allowlist_policy, file_type;
+
+# /sys/module/binder/parameters/impl
+type sysfs_binder_impl, fs_type, sysfs_type;

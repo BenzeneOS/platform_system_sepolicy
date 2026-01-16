@@ -337,6 +337,8 @@ genfscon binder /binder_logs/transaction_log u:object_r:binderfs_logs_transactio
 genfscon binder /binder_logs/failed_transaction_log u:object_r:binderfs_logs_transaction_history:s0
 genfscon binder /features u:object_r:binderfs_features:s0
 
+genfscon sysfs /module/binder/parameters/impl u:object_r:sysfs_binder_impl:s0
+
 genfscon inotifyfs / u:object_r:inotify:s0
 genfscon vfat / u:object_r:vfat:s0
 genfscon binder / u:object_r:binderfs:s0
