@@ -189,6 +189,8 @@ type $1_virtualizationmanager, domain, coredomain, virtualizationmanager_domain;
 type $1_virtmgr_crosvm, domain, coredomain, crosvm_domain;
 # Transition to virtualizationmanager when the client executes it.
 domain_auto_trans($1, virtualizationmanager_exec, $1_virtualizationmanager)
+# When virtualizationmanager execs a file with the crosvm_exec label, run it in the crosvm domain.
+domain_auto_trans($1_virtualizationmanager, crosvm_exec, $1_virtmgr_crosvm)
 # virtualizationmanager to be client of secretkeeper HAL. It ferries SecretManagement messages
 # from pVM to HAL.
 hal_client_domain($1_virtualizationmanager, hal_secretkeeper)
@@ -230,6 +232,8 @@ type $1_early_virtmgr, domain, coredomain, early_virtmgr_domain;
 type $1_early_virtmgr_crosvm, domain, coredomain, crosvm_domain;
 # Transition to early_virtmgr when the client executes it.
 domain_auto_trans($1, early_virtmgr_exec, $1_early_virtmgr)
+# When early_virtmgr execs a file with the crosvm_exec label, run it in the crosvm domain.
+domain_auto_trans($1_early_virtmgr, crosvm_exec, $1_early_virtmgr_crosvm)
 # Allow early_virtmgr to communicate over UDS with the client.
 allow { $1_early_virtmgr $1_early_virtmgr_crosvm  } $1:unix_stream_socket { ioctl getattr read write };
 # Let the client pass file descriptors to early_virtmgr and on to crosvm.
