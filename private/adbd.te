@@ -243,3 +243,6 @@ neverallow * adbd:process dyntransition;
 
 # allow adbd to check if an app is frozen
 allow adbd cgroup_v2:file read;
+
+# Allow adbd to receive UDS timeout
+get_prop(adbd, adb_timeout_prop)

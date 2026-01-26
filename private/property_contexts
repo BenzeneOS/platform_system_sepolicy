@@ -55,6 +55,7 @@ persist.adb.tradeinmode u:object_r:adbd_tradeinmode_prop:s0
 persist.adb.test_tradeinmode u:object_r:adbd_tradeinmode_prop:s0
 persist.adb.wifi.       u:object_r:adbd_prop:s0
 persist.adb.tls_server.enable  u:object_r:system_adbd_prop:s0
+persist.adb.local_connect_timeout_ms u:object_r:adb_timeout_prop:s0
 
 persist.audio.          u:object_r:audio_prop:s0
 persist.bluetooth.      u:object_r:bluetooth_prop:s0

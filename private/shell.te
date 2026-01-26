@@ -664,3 +664,6 @@ neverallow {
 # be able to execute such content. Allowing other domains to execute this
 # content would be a privilege escalation vulnerability.
 neverallow { domain -shell } shell_data_file:file no_x_file_perms;
+
+# Allow shell to set adbd connect timeout for UDS
+set_prop(shell, adb_timeout_prop)
