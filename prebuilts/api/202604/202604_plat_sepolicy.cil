@@ -23027,7 +23027,7 @@
 
 ;;* lmx 83 system/sepolicy/private/domain.te
 
-(allow domain ashmem_libcutils_device (chr_file (ioctl read write getattr lock append map watch watch_reads)))
+(allow domain ashmem_libcutils_device (chr_file (ioctl read write getattr lock append map open watch watch_reads)))
 ;;* lme
 
 ;;* lmx 85 system/sepolicy/private/domain.te

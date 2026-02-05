@@ -13,4 +13,3 @@
 (typeattributeset early_virtmgr_domain early_virtmgr)
 (type virtualizationmanager)
 (typeattributeset virtualizationmanager_domain virtualizationmanager)
-(allow domain ashmem_libcutils_device (chr_file (open)))
