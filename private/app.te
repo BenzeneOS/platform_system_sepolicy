@@ -382,7 +382,7 @@ allow appdomain incidentd:fifo_file append;
 allow appdomain dumpstate:fd use;
 allow appdomain dumpstate:unix_stream_socket { read write getopt getattr shutdown };
 allow appdomain dumpstate:fifo_file { write getattr };
-allow appdomain shell_data_file:file { write getattr };
+allow { appdomain -pcc_component } shell_data_file:file { write getattr };
 
 # Allow apps to send dump information to incidentd
 allow appdomain incidentd:fd use;
