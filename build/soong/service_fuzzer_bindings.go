@@ -532,6 +532,7 @@ var (
 		"tv_input":                               EXCEPTION_NO_FUZZER,
 		"tv_tuner_resource_mgr":                  EXCEPTION_NO_FUZZER,
 		"uce":                                    EXCEPTION_NO_FUZZER,
+		"ui_latency_stats":                       EXCEPTION_NO_FUZZER,
 		"uimode":                                 EXCEPTION_NO_FUZZER,
 		"updatelock":                             EXCEPTION_NO_FUZZER,
 		"uri_grants":                             EXCEPTION_NO_FUZZER,
