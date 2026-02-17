@@ -1163,6 +1163,15 @@ allow system_server locksettings_key:keystore2_key {
 	use
 };
 
+# Allow KeychainSystemService to manage keychain keys.
+allow system_server keychain_key:keystore2_key {
+	delete
+	get_info
+	rebind
+	update
+	use
+};
+
 
 # Allow system server to search and write to the persistent factory reset
 # protection partition. This block device does not get wiped in a factory reset.
