@@ -265,6 +265,7 @@
 /system/bin/tcpdump	--	u:object_r:tcpdump_exec:s0
 /system/bin/tune2fs	--	u:object_r:fsck_exec:s0
 /system/bin/resize2fs	--	u:object_r:fsck_exec:s0
+/system/bin/modprobe  u:object_r:toolbox_exec:s0
 /system/bin/toolbox	--	u:object_r:toolbox_exec:s0
 /system/bin/toybox	--	u:object_r:toolbox_exec:s0
 /system/bin/ld\.mc              u:object_r:rs_exec:s0
@@ -432,6 +433,7 @@
 /(vendor|system/vendor)/bin/sh                 u:object_r:vendor_shell_exec:s0
 /(vendor|system/vendor)/bin/toybox_vendor      u:object_r:vendor_toolbox_exec:s0
 /(vendor|system/vendor)/bin/toolbox            u:object_r:vendor_toolbox_exec:s0
+/vendor/bin/modprobe                           u:object_r:vendor_toolbox_exec:s0
 /(vendor|system/vendor)/etc(/.*)?              u:object_r:vendor_configs_file:s0
 /(vendor|system/vendor)/etc/cgroups\.json      u:object_r:vendor_cgroup_desc_file:s0
 /(vendor|system/vendor)/etc/dma_heap\.json     u:object_r:vendor_dma_heap_config_file:s0
