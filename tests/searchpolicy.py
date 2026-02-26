@@ -15,73 +15,96 @@
 # limitations under the License.
 
 import argparse
+import os
+import pkgutil
+import shutil
+import sys
+import tempfile
+
 import policy
 
-parser = argparse.ArgumentParser(
-    description="SELinux policy rule search tool. Intended to have a similar "
-        + "API as sesearch, but simplified to use only code available in AOSP")
-parser.add_argument("policy", help="Path to the SELinux policy to search.", nargs="?")
-parser.add_argument("--libpath", dest="libpath", help="Path to the libsepolwrap.so", nargs="?")
-tertypes = parser.add_argument_group("TE Rule Types")
-tertypes.add_argument("--allow", action="append_const",
-                    const="allow", dest="tertypes",
-                    help="Search allow rules.")
-expr = parser.add_argument_group("Expressions")
-expr.add_argument("-s", "--source",
-                  help="Source type/role of the TE/RBAC rule.")
-expr.add_argument("-t", "--target",
-                  help="Target type/role of the TE/RBAC rule.")
-expr.add_argument("-c", "--class", dest="tclass",
-                  help="Comma separated list of object classes")
-expr.add_argument("-p", "--perms", metavar="PERMS",
-                  help="Comma separated list of permissions.")
+SHARED_LIB_EXTENSION = ".dylib" if sys.platform == "darwin" else ".so"
 
-args = parser.parse_args()
+def do_main(libpath):
+    parser = argparse.ArgumentParser(
+        description="SELinux policy rule search tool. Intended to have a "
+            + "similar API as sesearch, but simplified to use only code "
+            + "available in AOSP")
+    parser.add_argument("policy", help="Path to the SELinux policy to search.",
+                        nargs="?")
+    tertypes = parser.add_argument_group("TE Rule Types")
+    tertypes.add_argument("-A", "--allow", action="append_const",
+                        const="allow", dest="tertypes",
+                        help="Search allow rules.")
+    expr = parser.add_argument_group("Expressions")
+    expr.add_argument("-s", "--source",
+                      help="Source type/role of the TE/RBAC rule.")
+    expr.add_argument("-t", "--target",
+                      help="Target type/role of the TE/RBAC rule.")
+    expr.add_argument("-c", "--class", dest="tclass",
+                      help="Comma separated list of object classes")
+    expr.add_argument("-p", "--perms", metavar="PERMS",
+                      help="Comma separated list of permissions.")
 
-if not args.tertypes:
-    parser.error("Must specify \"--allow\"")
+    args = parser.parse_args()
 
-if not args.policy:
-    parser.error("Must include path to policy")
-if not args.libpath:
-    parser.error("Must include path to libsepolwrap library")
+    if not args.tertypes:
+        parser.error("Must specify \"--allow\"")
 
-if not (args.source or args.target or args.tclass or args.perms):
-    parser.error("Must something to filter on, e.g. --source, --target, etc.")
+    if not args.policy:
+        parser.error("Must include path to policy")
 
-pol = policy.Policy(args.policy, None, args.libpath)
+    pol = policy.Policy(args.policy, None, libpath)
 
-if args.source:
-    scontext = {args.source}
-else:
-    scontext = set()
-if args.target:
-    tcontext = {args.target}
-else:
-    tcontext = set()
-if args.tclass:
-    tclass = set(args.tclass.split(","))
-else:
-    tclass = set()
-if args.perms:
-    perms = set(args.perms.split(","))
-else:
-    perms = set()
-
-TERules = pol.QueryTERule(scontext=scontext,
-                       tcontext=tcontext,
-                       tclass=tclass,
-                       perms=perms)
-
-# format rules for printing
-rules = []
-for r in TERules:
-    if len(r.perms) > 1:
-        rules.append("allow " + r.sctx + " " + r.tctx + ":" + r.tclass + " { " +
-                " ".join(sorted(r.perms)) + " };")
+    if args.source:
+        scontext = {args.source}
     else:
-        rules.append("allow " + r.sctx + " " + r.tctx + ":" + r.tclass + " " +
-                " ".join(sorted(r.perms)) + ";")
+        scontext = set()
+    if args.target:
+        tcontext = {args.target}
+    else:
+        tcontext = set()
+    if args.tclass:
+        tclass = set(args.tclass.split(","))
+    else:
+        tclass = set()
+    if args.perms:
+        perms = set(args.perms.split(","))
+    else:
+        perms = set()
 
-for r in sorted(rules):
-    print(r)
+    TERules = pol.QueryTERule(scontext=scontext,
+                           tcontext=tcontext,
+                           tclass=tclass,
+                           perms=perms)
+
+    # format rules for printing
+    rules = []
+    for r in TERules:
+        if len(r.perms) > 1:
+            rules.append("allow " + r.sctx + " " + r.tctx + ":" + r.tclass +
+                         " { " + " ".join(sorted(r.perms)) + " };")
+        else:
+            rules.append("allow " + r.sctx + " " + r.tctx + ":" + r.tclass +
+                         " " + " ".join(sorted(r.perms)) + ";")
+
+    for r in sorted(rules):
+        print(r)
+
+
+if __name__ == "__main__":
+    temp_dir = tempfile.mkdtemp()
+    try:
+        libname = "libsepolwrap" + SHARED_LIB_EXTENSION
+        temp_lib_path = os.path.join(temp_dir, libname)
+        with open(temp_lib_path, "wb") as f:
+            blob = pkgutil.get_data("searchpolicy", libname)
+            if not blob:
+                sys.exit(
+                    "Error: libsepolwrap does not exist. Is this binary"
+                    " corrupted?\n"
+                )
+            f.write(blob)
+        do_main(temp_lib_path)
+    finally:
+        shutil.rmtree(temp_dir)

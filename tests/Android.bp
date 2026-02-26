@@ -98,7 +98,7 @@ python_binary_host {
         "searchpolicy.py",
     ],
     libs: ["pysepolwrap"],
-    required: ["libsepolwrap"],
+    data: [":libsepolwrap"],
 }
 
 python_binary_host {
