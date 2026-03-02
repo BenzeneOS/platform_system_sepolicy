@@ -300,9 +300,6 @@ get_prop(shell, build_attestation_prop)
 # TODO (b/350628688): Remove this once it's safe to do so.
 allow shell oatdump_exec:file rx_file_perms;
 
-# Allow shell to execute aflags.
-domain_auto_trans(shell, aflags_exec, aflags)
-
 # Create and use network sockets.
 net_domain(shell)
 
