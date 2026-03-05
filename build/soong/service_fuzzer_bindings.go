@@ -339,6 +339,7 @@ var (
 		"hardware_properties":                    EXCEPTION_NO_FUZZER,
 		"hdmi_control":                           EXCEPTION_NO_FUZZER,
 		"healthconnect":                          EXCEPTION_NO_FUZZER,
+		"hid":                                    []string{"hidservice_fuzzer"},
 		"ions":                                   EXCEPTION_NO_FUZZER,
 		"idmap":                                  EXCEPTION_NO_FUZZER,
 		"incident":                               []string{"incidentd_service_fuzzer"},
