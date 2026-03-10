@@ -391,6 +391,7 @@ memtrack.proxy                            u:object_r:memtrackproxy_service:s0
 midi                                      u:object_r:midi_service:s0
 mmd                                       u:object_r:mmd_service:s0
 mount                                     u:object_r:mount_service:s0
+multisensory_manager                      u:object_r:multisensory_manager_service:s0
 music_recognition                         u:object_r:music_recognition_service:s0
 native_serial                             u:object_r:native_serial_service:s0
 nearby                                    u:object_r:nearby_service:s0
