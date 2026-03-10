@@ -154,7 +154,8 @@ func (m *versionedPolicy) GenerateAndroidBuildActions(ctx android.ModuleContext)
 			Inputs(android.PathsForModuleSrc(ctx, m.properties.Dependent_cils)).
 			Text(out.String()).
 			FlagWithArg("-o ", os.DevNull).
-			FlagWithArg("-f ", os.DevNull)
+			FlagWithArg("-f ", os.DevNull).
+			Flag("-v")
 	}
 
 	rule.Build("mapping", "Versioning mapping file "+ctx.ModuleName())
