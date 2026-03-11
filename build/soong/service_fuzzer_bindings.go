@@ -137,6 +137,7 @@ var (
 		"android.hardware.security.factory_reset_protection.IFactoryResetProtection/default": EXCEPTION_NO_FUZZER,
 		"android.hardware.security.keymint.IKeyMintDevice/default":                           EXCEPTION_NO_FUZZER,
 		"android.hardware.security.keymint.IRemotelyProvisionedComponent/default":            EXCEPTION_NO_FUZZER,
+		"android.os.IAccessor/IRemotelyProvisionedComponent/security_vm_keymint":             EXCEPTION_NO_FUZZER,
 		"android.hardware.security.secretkeeper.ISecretkeeper/default":                       EXCEPTION_NO_FUZZER,
 		"android.hardware.security.secretkeeper.ISecretkeeper/nonsecure":                     []string{"android.hardware.security.secretkeeper-service.nonsecure_fuzzer"},
 		"android.hardware.security.secureclock.ISecureClock/default":                         EXCEPTION_NO_FUZZER,
