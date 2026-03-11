@@ -44,6 +44,9 @@ ro.llk.                 u:object_r:llkd_prop:s0
 ro.khungtask.           u:object_r:llkd_prop:s0
 log.                    u:object_r:log_prop:s0
 log.tag                 u:object_r:log_tag_prop:s0
+starting_at_board_api(202704, `
+log.tag.bluetooth       u:object_r:bluetooth_log_prop:s0
+')
 log.tag.WifiHAL         u:object_r:wifi_log_prop:s0
 ro.log.file_logger.path    u:object_r:log_file_logger_prop:s0 exact string
 security.perf_harden    u:object_r:shell_prop:s0
