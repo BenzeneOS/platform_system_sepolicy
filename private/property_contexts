@@ -837,6 +837,7 @@ ro.config.system_vol_default  u:object_r:systemsound_config_prop:s0 exact int
 ro.config.system_vol_steps    u:object_r:systemsound_config_prop:s0 exact int
 ro.config.vc_call_vol_default u:object_r:systemsound_config_prop:s0 exact int
 
+ro.context_hub.chipset_supported u:object_r:context_hub_chipset_prop:s0 exact bool
 ro.control_privapp_permissions u:object_r:packagemanager_config_prop:s0 exact enum disable enforce log
 ro.cp_system_other_odex        u:object_r:packagemanager_config_prop:s0 exact bool
 
