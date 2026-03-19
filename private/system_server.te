@@ -1832,6 +1832,9 @@ allow system_server {
   profman
 }:process sigkill;
 
+allow system_server hid_service:service_manager find;
+binder_call(system_server, hidservice)
+
 # Allow system_server to talk to native serial service to read metadata of and open serial ports.
 allow system_server native_serial_service:service_manager find;
 binder_call(system_server, serialservice)
