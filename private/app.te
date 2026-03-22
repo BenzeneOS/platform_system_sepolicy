@@ -38,6 +38,10 @@ userdebug_or_eng(`
 get_prop(appdomain, test_harness_prop)
 
 get_prop(appdomain, boot_status_prop)
+
+# Allow apps to read property of chipset that supports context hub for GTS purpose
+get_prop({ appdomain -isolated_app_all -ephemeral_app -pcc_component -sdk_sandbox_all }, context_hub_chipset_prop)
+
 get_prop(appdomain, dalvik_config_prop_type)
 get_prop(appdomain, media_config_prop)
 get_prop(appdomain, packagemanager_config_prop)
