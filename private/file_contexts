@@ -428,6 +428,7 @@
 /system/bin/tradeinmode           u:object_r:tradeinmode_exec:s0
 /system/bin/prefetch              u:object_r:prefetch_exec:s0
 /system/bin/aisealhostservice     u:object_r:aisealhostservice_exec:s0
+/system/bin/aoad                  u:object_r:aoad_exec:s0
 
 #############################
 # Vendor files
