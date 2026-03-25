@@ -130,6 +130,9 @@ system_vendor_config_prop(userdata_alias_remove_prop)
 typeattribute log_prop log_property_type;
 typeattribute log_tag_prop log_property_type;
 typeattribute wifi_log_prop log_property_type;
+starting_at_board_api(202704, `
+typeattribute bluetooth_log_prop log_property_type;
+')
 
 allow property_type tmpfs:filesystem associate;
 
