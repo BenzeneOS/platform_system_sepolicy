@@ -1178,6 +1178,7 @@ allow system_server locksettings_key:keystore2_key {
 allow system_server keychain_key:keystore2_key {
 	delete
 	get_info
+	grant
 	rebind
 	update
 	use
@@ -1852,6 +1853,8 @@ binder_call(system_server, usbauthservice)
 # Allow system_server to access AiSeal VM
 is_flag_enabled(RELEASE_AISEAL_FRAMEWORK, `
     aiseal_use(system_server)
+
+    # Allow system server to AiSeal internal service to notify of user add/lock/unlock/remove events
     allow system_server aiseal_internal_service:service_manager find;
 ')
 
