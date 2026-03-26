@@ -183,9 +183,6 @@ set_prop(shell, perf_drop_caches_prop)
 set_prop(shell, powerctl_prop)
 set_prop(shell, log_tag_prop)
 set_prop(shell, wifi_log_prop)
-starting_at_board_api(202704, `
-set_prop(shell, bluetooth_log_prop)
-')
 # Allow shell to start/stop traced via the persist.traced.enable
 # property (which also takes care of /data/misc initialization).
 set_prop(shell, traced_enabled_prop)
