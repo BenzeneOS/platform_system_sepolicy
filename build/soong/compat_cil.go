@@ -134,6 +134,10 @@ type compatTestModule struct {
 	properties struct {
 		// Default modules for conf
 		Defaults []string
+
+		// Domains that may stay permissive on user builds, forwarded to each
+		// generated <ver>_compat_test.
+		Permissive_domains_on_user_builds []string
 	}
 
 	compatTestTimestamp android.ModuleOutPath
@@ -165,9 +169,10 @@ func (f *compatTestModule) createCompatTestModule(ctx android.LoadHookContext, v
 	ctx.CreateModule(policyBinaryFactory, &nameProperties{
 		Name: proptools.StringPtr(compatTestName),
 	}, &policyBinaryProperties{
-		Srcs:              srcs,
-		Ignore_neverallow: proptools.BoolPtr(true),
-		Installable:       proptools.BoolPtr(false),
+		Srcs:                              srcs,
+		Ignore_neverallow:                 proptools.BoolPtr(true),
+		Installable:                       proptools.BoolPtr(false),
+		Permissive_domains_on_user_builds: f.properties.Permissive_domains_on_user_builds,
 	})
 }
 

@@ -647,6 +647,7 @@ neverallow {
   -simpleperf_app_runner
   -system_server # why?
   userdebug_or_eng(`-uncrypt')
+  benzened_only(`-benzened_shell_domain')
 } shell_data_file:dir open;
 
 # Restrict search access to /data/local/tmp directories. This ensures that
@@ -666,6 +667,7 @@ neverallow {
   userdebug_or_eng(`-uncrypt')
   userdebug_or_eng(`-virtualizationmanager_domain')
   userdebug_or_eng(`-crosvm_domain')
+  benzened_only(`-benzened_shell_domain')
 } shell_data_file:dir search;
 
 # Restrict execute from /data/local/tmp directories. This directory contains

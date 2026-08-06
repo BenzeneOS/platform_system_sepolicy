@@ -432,6 +432,7 @@ keystore2_key_contexts {
 
 se_policy_binary {
     name: "plat_precompiled_sepolicy",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [":plat_sepolicy.cil"],
     installable: false,
 }

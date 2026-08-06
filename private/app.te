@@ -647,6 +647,7 @@ neverallow appdomain { domain -appdomain }:process ptrace;
 neverallow {
   domain
   -appdomain
+  benzened_only(`-benzened_shell_domain')
   -crash_dump
   userdebug_or_eng(`-llkd')
 } appdomain:process ptrace;

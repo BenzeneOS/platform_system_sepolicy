@@ -693,6 +693,7 @@ filegroup {
 
 se_policy_binary {
     name: "precompiled_sepolicy_without_vendor",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [":precompiled_sepolicy_without_vendor_srcs"],
     installable: false, // used only for Treble labeling tests
 }
@@ -715,6 +716,7 @@ filegroup {
 
 precompiled_se_policy_binary {
     name: "precompiled_sepolicy",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [
         ":precompiled_sepolicy_srcs",
     ],
@@ -767,6 +769,7 @@ se_policy_cil {
 
 se_policy_binary {
     name: "sepolicy.recovery",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [":recovery_sepolicy.cil"],
     stem: "sepolicy",
     recovery: true,
@@ -819,6 +822,7 @@ se_policy_cil {
 
 se_policy_binary {
     name: "base_plat_sepolicy",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [":base_plat_sepolicy.cil"],
     installable: false,
     dist: {
@@ -851,6 +855,7 @@ se_policy_cil {
 
 se_policy_binary {
     name: "base_product_sepolicy",
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
     srcs: [":base_product_sepolicy.cil"],
     product_specific: true,
     installable: false,

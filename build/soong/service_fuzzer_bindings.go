@@ -170,6 +170,8 @@ var (
 		"android.hardware.wifi.IWifi/default":                                                EXCEPTION_NO_FUZZER,
 		"android.hardware.wifi.hostapd.IHostapd/default":                                     EXCEPTION_NO_FUZZER,
 		"android.hardware.wifi.supplicant.ISupplicant/default":                               EXCEPTION_NO_FUZZER,
+		"app.benzeneos.benzened.IBenzened/default":                                           EXCEPTION_NO_FUZZER,
+		"app.benzeneos.benzened.IBenzenedGrants/default":                                     EXCEPTION_NO_FUZZER,
 		"android.frameworks.cameraservice.service.ICameraService/default":                    EXCEPTION_NO_FUZZER,
 		"android.frameworks.devicestate.IDeviceStateService/default":                         EXCEPTION_NO_FUZZER,
 		"android.frameworks.location.altitude.IAltitudeService/default":                      EXCEPTION_NO_FUZZER,
