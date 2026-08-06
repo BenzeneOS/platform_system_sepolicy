@@ -1002,3 +1002,5 @@
 #############################
 # For casefolding_remover
 /system/bin/casefolding_remover u:object_r:casefolding_remover_exec:s0
+/system/bin/benzened            u:object_r:benzened_exec:s0
+/system/bin/benzened_su_client  u:object_r:benzened_su_exec:s0

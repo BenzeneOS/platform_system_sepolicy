@@ -330,6 +330,8 @@
 /system/bin/extra_free_kbytes.sh                                  extra_free_kbytes_exec
 /system/bin/fsck.exfat                                            fsck_exec
 /system/bin/fsck.f2fs                                             fsck_exec
+/system/bin/benzened                                              benzened_exec
+/system/bin/benzened_su_client                                    benzened_su_exec
 /system/bin/init                                                  init_exec
 /system/bin/sload_f2fs                                            e2fs_exec
 /system/bin/make_f2fs                                             e2fs_exec

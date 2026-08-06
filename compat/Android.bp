@@ -278,6 +278,7 @@ se_compat_cil {
 se_compat_test {
     name: "sepolicy_compat_test",
     defaults: ["se_policy_conf_flags_defaults"],
+    permissive_domains_on_user_builds: ["benzened_shell_unrestricted"],
 }
 
 se_build_files {

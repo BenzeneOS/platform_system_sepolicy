@@ -1,0 +1,269 @@
+type benzened, domain, coredomain;
+type benzened_exec, system_file_type, exec_type, file_type;
+type benzened_service, service_manager_type;
+type benzened_grants_service, service_manager_type;
+
+attribute benzened_shell_domain;
+type benzened_shell, domain, coredomain, mlstrustedsubject, benzened_shell_domain;
+type benzened_shell_unrestricted, domain, coredomain, mlstrustedsubject, benzened_shell_domain;
+
+type benzened_su_exec, system_file_type, exec_type, file_type;
+
+ifelse(target_benzened, true, `
+init_daemon_domain(benzened)
+
+binder_use(benzened)
+add_service(benzened, benzened_service)
+
+binder_call(benzened, system_server)
+allow benzened benzened_grants_service:service_manager find;
+add_service(system_server, benzened_grants_service)
+
+allow benzened self:process { fork setexec };
+allow benzened self:anon_inode { create read write ioctl };
+allow benzened benzened_shell_domain:process { signal sigkill signull };
+allow benzened devpts:chr_file { open read write ioctl getattr };
+allow benzened ptmx_device:chr_file { open read write ioctl getattr };
+allow benzened system_file_type:dir { getattr search open read };
+allow benzened system_file_type:file r_file_perms;
+
+domain_auto_trans(benzened, shell_exec, benzened_shell)
+
+neverallow benzened self:global_capability_class_set *;
+neverallow benzened self:global_capability2_class_set *;
+
+allow benzened_shell_domain benzened:fd use;
+allow benzened_shell_domain benzened:unix_stream_socket { read write getattr ioctl shutdown };
+
+binder_use(benzened_shell_domain)
+binder_call(benzened_shell_domain, system_server)
+binder_call({ untrusted_app_all priv_app platform_app shell }, benzened_shell_domain)
+binder_call(benzened_shell_domain, { untrusted_app_all priv_app platform_app shell })
+allow benzened_shell_domain devpts:chr_file { open read write ioctl getattr };
+allow benzened_shell_domain ptmx_device:chr_file { open read write ioctl getattr };
+allow benzened_shell_domain self:process { fork setexec setsched signal sigkill sigstop };
+allow benzened_shell_domain self:anon_inode { create ioctl read write map };
+allow benzened_shell_domain shell_exec:file { open read getattr map execute execute_no_trans };
+allow benzened_shell_domain zygote_exec:file { r_file_perms execute execute_no_trans };
+allow benzened_shell_domain idmap_exec:file { r_file_perms execute execute_no_trans };
+
+allow benzened_shell_domain self:global_capability_class_set {
+    chown
+    dac_override
+    dac_read_search
+    fowner
+    fsetid
+    ipc_lock
+    kill
+    net_admin
+    net_bind_service
+    net_raw
+    setgid
+    sys_boot
+    sys_chroot
+    sys_nice
+    sys_ptrace
+    sys_resource
+    sys_time
+};
+allow benzened_shell_unrestricted self:global_capability_class_set sys_admin;
+allow benzened_shell_domain self:global_capability2_class_set { audit_read perfmon syslog };
+
+allow benzened_shell_domain self:perf_event { open read write kernel tracepoint cpu };
+allow benzened_shell_domain sysfs_uprobe:dir r_dir_perms;
+allow benzened_shell_domain sysfs_uprobe:file r_file_perms;
+allow benzened_shell_domain untrusted_app_all:process ptrace;
+allow benzened_shell_domain appdomain:dir r_dir_perms;
+allow benzened_shell_domain appdomain:file r_file_perms;
+allow benzened_shell_domain appdomain:lnk_file r_file_perms;
+
+allow benzened_shell_domain system_file_type:dir { getattr search open read };
+allow benzened_shell_domain { system_file_type -exec_type }:file rx_file_perms;
+allow benzened_shell_domain toolbox_exec:file rx_file_perms;
+
+allow benzened_shell_domain system_data_file:dir { r_dir_perms watch };
+allow benzened_shell_domain system_data_file:file { r_file_perms watch };
+allow benzened_shell_domain system_data_file:lnk_file r_file_perms;
+allow benzened_shell_unrestricted system_data_file:dir create_dir_perms;
+allow benzened_shell_unrestricted system_data_file:file create_file_perms;
+allow benzened_shell_unrestricted system_data_file:lnk_file create_file_perms;
+allow benzened_shell_domain cache_file:dir { r_dir_perms create_dir_perms };
+allow benzened_shell_domain cache_file:file create_file_perms;
+
+allow benzened_shell_domain app_data_file:dir { r_dir_perms create_dir_perms watch };
+allow benzened_shell_domain app_data_file:file { create_file_perms execute execute_no_trans watch };
+allow benzened_shell_domain app_data_file:lnk_file create_file_perms;
+
+allow benzened_shell_domain apk_data_file:dir { r_dir_perms watch };
+allow benzened_shell_domain apk_data_file:file { r_file_perms execute };
+allow benzened_shell_domain dalvikcache_data_file:dir { getattr search };
+allow benzened_shell_domain dalvikcache_data_file:file { r_file_perms execute };
+allow benzened_shell_domain apex_art_data_file:dir search;
+allow benzened_shell_domain apex_art_data_file:file r_file_perms;
+allow benzened_shell_domain apex_module_data_file:dir search;
+allow benzened_shell_domain apex_info_file:file r_file_perms;
+allow benzened_shell_domain vendor_apex_file:dir search;
+allow benzened_shell_domain vendor_apex_file:file getattr;
+allow benzened_shell_domain oemfs:dir search;
+allow benzened_shell_domain proc_pid_max:file r_file_perms;
+
+allow benzened_shell_domain resourcecache_data_file:dir { getattr search };
+allow benzened_shell_domain resourcecache_data_file:file { getattr open read map };
+allow benzened_shell_domain vendor_overlay_file:dir { getattr open read search };
+allow benzened_shell_domain vendor_overlay_file:file { getattr open read map };
+
+allow benzened_shell_domain rootfs:dir { getattr search open read watch };
+allow benzened_shell_domain rootfs:file getattr;
+allow benzened_shell_domain system_data_root_file:dir { getattr search open read watch };
+allow benzened_shell_domain gsi_persistent_data_file:file getattr;
+allow benzened_shell_domain init_exec:lnk_file { getattr read };
+allow benzened_shell_domain mnt_user_file:lnk_file read;
+allow benzened_shell_domain mnt_user_file:dir search;
+allow benzened_shell_domain fuse:dir search;
+
+allow benzened_shell_domain {
+    core_data_file_type
+    -anr_data_file
+    -apk_private_tmp_file
+    -apk_tmp_file
+    -checkin_data_file
+    -credstore_data_file
+    -dropbox_data_file
+    -gsi_data_file
+    -incident_data_file
+    -keystore_data_file
+    -mirror_data_file
+    -odrefresh_data_file
+    -odsign_data_file
+    -pcc_data_file
+    -perfetto_traces_data_file
+    -sdk_sandbox_system_data_file
+    -staging_data_file
+    -stats_config_data_file
+    -stats_data_file
+    -storage_area_app_dir
+    -storage_area_dir
+    -storage_area_key_file
+    -trace_data_file
+    -unencrypted_data_file
+    -vold_data_file
+}:dir getattr;
+
+allow benzened_shell_domain {
+    linkerconfig_file
+    metadata_file
+    mnt_expand_file
+    mnt_user_file
+    postinstall_mnt_dir
+    system_dlkm_file
+}:dir getattr;
+
+allow benzened_shell_domain shell_data_file:dir { search open read };
+
+get_prop(benzened_shell_domain, build_attestation_prop)
+get_prop(benzened_shell_domain, odsign_prop)
+get_prop(benzened_shell_domain, qemu_sf_lcd_density_prop)
+get_prop(benzened_shell_domain, packagemanager_config_prop)
+get_prop(benzened_shell_domain, persist_wm_debug_prop)
+
+allow benzened_shell_domain {
+    activity_service
+    display_service
+    network_management_service
+    package_service
+}:service_manager find;
+
+neverallow benzened_shell self:global_capability_class_set {
+    setuid
+    audit_control
+    audit_write
+    ipc_owner
+    lease
+    linux_immutable
+    mknod
+    net_broadcast
+    setfcap
+    setpcap
+    sys_admin
+    sys_module
+    sys_pacct
+    sys_rawio
+    sys_tty_config
+};
+neverallow benzened_shell self:global_capability2_class_set {
+    block_suspend
+    checkpoint_restore
+    mac_admin
+    mac_override
+    wake_alarm
+};
+neverallow benzened_shell { appdomain -untrusted_app_all }:process ptrace;
+neverallow benzened_shell kernel:security *;
+neverallow benzened_shell { fs_type -sdcard_type -fusefs_type }:filesystem { mount remount relabelfrom relabelto };
+neverallow benzened_shell dev_type:blk_file no_w_file_perms;
+neverallow benzened_shell system_data_file:file no_w_file_perms;
+neverallow benzened_shell system_data_file:dir no_w_dir_perms;
+
+neverallow benzened_shell {
+    file_type
+    -system_file_type
+    -system_lib_file
+    -system_bootstrap_lib_file
+    -system_linker_exec
+    -vendor_file_type
+    -exec_type
+    -postinstall_file
+    -apk_data_file
+    -app_data_file
+    -dalvikcache_data_file
+}:file execute;
+
+dontaudit benzened_shell {
+    anr_data_file
+    apk_private_tmp_file
+    apk_tmp_file
+    checkin_data_file
+    credstore_data_file
+    dropbox_data_file
+    gsi_data_file
+    incident_data_file
+    keystore_data_file
+    mirror_data_file
+    odrefresh_data_file
+    odsign_data_file
+    pcc_data_file
+    perfetto_traces_data_file
+    sdk_sandbox_system_data_file
+    staging_data_file
+    stats_config_data_file
+    stats_data_file
+    storage_area_app_dir
+    storage_area_dir
+    storage_area_key_file
+    trace_data_file
+    unencrypted_data_file
+    vold_data_file
+}:dir getattr;
+
+permissive benzened_shell_unrestricted;
+
+allow benzened benzened_shell_unrestricted:process transition;
+allow benzened_shell_unrestricted shell_exec:file { entrypoint open read getattr map execute };
+dontaudit benzened benzened_shell_unrestricted:process noatsecure;
+allow benzened benzened_shell_unrestricted:process { siginh rlimitinh };
+
+allow { untrusted_app_all priv_app platform_app shell } benzened_su_exec:file rx_file_perms;
+binder_call({ untrusted_app_all priv_app platform_app shell }, benzened)
+allow { untrusted_app_all priv_app platform_app shell } benzened_service:service_manager find;
+allow { untrusted_app_all priv_app platform_app shell } benzened:unix_stream_socket { read write getattr shutdown };
+allow { untrusted_app_all priv_app platform_app shell } benzened:fifo_file { read getattr };
+
+# Syscall tracepoints name what a target reads without relying on its imports,
+# which a dlsym-resolving library does not populate.
+allow benzened_shell_domain debugfs_tracing_debug:dir r_dir_perms;
+allow benzened_shell_domain debugfs_tracing_debug:file rw_file_perms;
+allow benzened_shell_domain debugfs_tracing:dir r_dir_perms;
+allow benzened_shell_domain debugfs_tracing:file rw_file_perms;
+
+allow zygote zygote_tmpfs:lnk_file create;
+')

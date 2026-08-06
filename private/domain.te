@@ -1441,6 +1441,7 @@ neverallow {
   -installd # for relabelfrom and unlink, check for this in explicit neverallow
   -vold_prepare_subdirs # For unlink
   with_asan(`-asan_extract')
+  benzened_only(`-benzened_shell_domain')
 } system_data_file:file no_w_file_perms;
 # do not grant anything greater than r_file_perms and relabelfrom unlink
 # to installd
@@ -1505,6 +1506,7 @@ neverallow {
   -appdomain
   -artd
   -installd
+  benzened_only(`-benzened_shell_domain')
 } { app_data_file privapp_data_file }:lnk_file read;
 
 # servicemanager and vndservicemanager are the only processes which handle the
@@ -1731,6 +1733,7 @@ neverallow {
   userdebug_or_eng(`-simpleperf_boot')
   -storaged
   -system_server
+  benzened_only(`-benzened_shell_domain')
 } self:global_capability_class_set sys_ptrace;
 
 # Limit ability to generate hardware unique device ID attestations to priv_app_alls
@@ -1767,6 +1770,7 @@ neverallow {
   -appdomain
   -artd # compile secondary dex files
   -installd # creation of sandbox
+  benzened_only(`-benzened_shell_domain')
 } {
   privapp_data_file
   app_data_file
@@ -1791,6 +1795,7 @@ neverallow {
   -app_zygote
   -native_app_zygote
   -artd # compile secondary dex files
+  benzened_only(`-benzened_shell_domain')
   -installd
   -profman
   -rs # spawned by appdomain, so carryover the exception above
@@ -1840,6 +1845,7 @@ neverallow {
   -artd # compile secondary dex files
   -installd
   -rs # spawned by appdomain, so carryover the exception above
+  benzened_only(`-benzened_shell_domain')
 } {
   privapp_data_file
   app_data_file
@@ -1862,6 +1868,7 @@ neverallow {
   -appdomain
   -app_zygote
   -artd # compile secondary dex files
+  benzened_only(`-benzened_shell_domain')
   -installd
   -rs # spawned by appdomain, so carryover the exception above
 } {
@@ -1875,6 +1882,7 @@ neverallow {
   -appdomain
   -artd # compile secondary dex files
   -installd # creation of sandbox
+  benzened_only(`-benzened_shell_domain')
 } {
   privapp_data_file
   app_data_file
@@ -1960,6 +1968,7 @@ neverallow {
     domain
     -appdomain
     with_asan(`-asan_extract')
+    benzened_only(`-benzened_shell_domain')
     -shell
     userdebug_or_eng(`-su')
     -app_zygote
@@ -2040,6 +2049,7 @@ neverallow {
 neverallow {
   domain
   -appdomain
+  benzened_only(`-benzened_shell_domain')
   userdebug_or_eng(`-overlay_remounter')
 } {
   data_file_type
@@ -2055,6 +2065,7 @@ neverallow {
 define(`dac_override_allowed', `{
   apexd
   artd
+  benzened_only(`benzened_shell_domain')
   casefolding_remover
   dnsmasq
   dumpstate
@@ -2346,7 +2357,7 @@ neverallow {
   -kernel
   -bpfloader
   -uprobestats
-} self:capability2 perfmon;
+ benzened_only(`-benzened_shell_domain') } self:capability2 perfmon;
 
 # respect system_app sandboxes
 neverallow {
