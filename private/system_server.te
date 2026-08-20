@@ -1358,6 +1358,7 @@ with_asan(`
 allow system_server {
   fs_bpf
   fs_bpf_cputimeinstate
+  fs_bpf_observatorycpu
   fs_bpf_net_shared
   fs_bpf_netd_readonly
   fs_bpf_netd_shared
@@ -1365,6 +1366,7 @@ allow system_server {
 allow system_server {
   fs_bpf
   fs_bpf_cputimeinstate
+  fs_bpf_observatorycpu
   fs_bpf_net_shared
   fs_bpf_netd_readonly
   fs_bpf_netd_shared
