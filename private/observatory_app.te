@@ -1,0 +1,15 @@
+###
+### Observatory, a platform-signed tracing dashboard.
+###
+
+type observatory_app, domain;
+typeattribute observatory_app coredomain;
+
+app_domain(observatory_app)
+
+# app_domain grants no service discovery, and platform_app_domain is deliberately not used.
+allow observatory_app app_api_service:service_manager find;
+
+get_prop(observatory_app, incremental_prop)
+
+dontaudit observatory_app proc_filesystems:file r_file_perms;
