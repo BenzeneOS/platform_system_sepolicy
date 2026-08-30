@@ -7,6 +7,15 @@ net_domain(rkp_cert_processor)
 
 binder_use(rkp_cert_processor)
 binder_call(rkp_cert_processor, system_server)
+use_keystore(rkp_cert_processor)
+allow rkp_cert_processor keystore:keystore2_key { rebind use delete get_info };
+
+get_prop(rkp_cert_processor, serialno_prop)
+get_prop(rkp_cert_processor, build_attestation_prop)
+get_prop(rkp_cert_processor, build_vendor_prop)
+get_prop(rkp_cert_processor, build_prop)
+
+allow rkp_cert_processor rkp_cert_processor_exec:file r_file_perms;
 
 add_service(rkp_cert_processor, rkp_cert_processor_service)
 
